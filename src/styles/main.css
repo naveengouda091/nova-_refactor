@@ -670,6 +670,19 @@ button:active, .btn:active { transform: scale(0.975); }
   gap: 6px;
 }
 
+/* Three.js Trophy Mount Container */
+#trophy-three-mount {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+}
+#trophy-three-mount:active {
+  cursor: grabbing;
+}
+
 /* Pillar Canvas Container */
 .pillar-canvas-container {
   position: relative;
