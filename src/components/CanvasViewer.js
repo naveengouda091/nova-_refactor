@@ -100,29 +100,58 @@ export function initCanvasViewer() {
   let hoveredDev = 0.018;
 
   const points = [];
-  const rings = 24;
-  const sectors = 36;
-  const radius = 1.0;
-  const heightExt = 1.4;
+  const rings = 42;
+  const sectors = 32;
 
   for (let r = 0; r <= rings; r++) {
-    const v = r / rings;
-    const y = (v - 0.5) * heightExt;
-    const rad = v < 0.25 ? radius * 1.5 : (v > 0.85 ? radius * 1.3 : radius);
+    const v = r / rings; // 0 (bottom) to 1 (top)
+    const y = (v - 0.5) * 2.2; // -1.1 to +1.1
+
+    let rad = 0.45;
+    // Base Plinth (v: 0.0 -> 0.25)
+    if (v < 0.12) {
+      rad = 0.85 - v * 0.8;
+    } else if (v < 0.25) {
+      rad = 0.62 + Math.sin((v - 0.12) * Math.PI * 4) * 0.08;
+    }
+    // Shaft (v: 0.25 -> 0.72)
+    else if (v < 0.72) {
+      const shaftV = (v - 0.25) / 0.47;
+      const band = Math.exp(-((shaftV - 0.5) ** 2) / 0.03) * 0.12;
+      rad = 0.38 + band;
+    }
+    // Capital & Brackets (v: 0.72 -> 1.0)
+    else {
+      const capV = (v - 0.72) / 0.28;
+      rad = 0.42 + Math.sin(capV * Math.PI) * 0.35 + (capV > 0.6 ? (capV - 0.6) * 0.5 : 0);
+    }
 
     for (let s = 0; s < sectors; s++) {
       const u = s / sectors;
       const angle = u * Math.PI * 2;
-      const x = Math.cos(angle) * rad;
-      const z = Math.sin(angle) * rad;
+      
+      // 4-corner architectural plinth & capital brackets, 16-faceted fluting along shaft
+      let shapeFactor = 1.0;
+      if (v < 0.25) {
+        shapeFactor = 1.0 + 0.14 * Math.cos(4 * angle);
+      } else if (v < 0.72) {
+        shapeFactor = 1.0 + 0.06 * Math.cos(16 * angle);
+      } else {
+        shapeFactor = 1.0 + 0.24 * Math.cos(4 * angle);
+      }
 
-      const dev = 0.35 * Math.sin(4 * angle) * Math.cos(3 * y) + 
-                  0.45 * Math.exp(-((x - 0.4)**2 + (z - 0.4)**2) / 0.1) -
-                  0.25 * Math.sin(2 * y);
+      const rFinal = rad * shapeFactor;
+      const x = Math.cos(angle) * rFinal;
+      const z = Math.sin(angle) * rFinal;
+
+      // Realistic metrology deviation profile (sub-millimeter surface variance)
+      const dev = 0.025 * Math.sin(4 * angle) * Math.cos(3 * y) + 
+                  0.045 * Math.exp(-((x - 0.3)**2 + (z - 0.3)**2) / 0.08) -
+                  0.015 * Math.sin(2 * y);
 
       points.push({
         x, y, z,
-        dev: Math.max(-1.0, Math.min(1.0, dev))
+        dev: Math.max(-0.08, Math.min(0.08, dev))
       });
     }
   }
@@ -145,7 +174,7 @@ export function initCanvasViewer() {
     const y2 = y * cp - z1 * sp;
     const z2 = y * sp + z1 * cp;
 
-    const scale = Math.min(width, height) * 0.32;
+    const scale = Math.min(width, height) * 0.26;
     const fov = 3.2 / (3.2 + z2);
 
     return {

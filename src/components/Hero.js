@@ -39,79 +39,61 @@ export function Hero() {
             </div>
           </div>
 
-          <!-- Right: Interactive 5-Stage Metrology Flange Canvas -->
+          <!-- Right: Precision 3D CAD Viewport Card (Mandapa Heritage Pillar) -->
           <div class="hero-visual-col">
-            <div class="hero-collage-wrap">
+            <div class="hero-collage-wrap pillar-viewport-wrap">
               
-              <!-- Floating Callout Badges (Positioned with safe bounds & z-index) -->
-              <div class="floating-badge badge-float-safe-1" aria-label="Tolerance metric">
+              <!-- 3 Floating Glassmorphic Telemetry Badges (90% White with subtle drop shadow) -->
+              <div class="floating-badge badge-mandapa-tl glass-badge" aria-label="Tolerance metric">
                 <span class="status-dot dot-green" aria-hidden="true"></span>
-                <span class="mono text-xs font-bold">&plusmn;0.02mm Tolerance</span>
+                <span class="mono text-xs font-bold">TLS + UAV &bull; 0.5mm Tol</span>
               </div>
 
-              <div class="floating-badge badge-float-safe-2" aria-label="Point density metric">
-                <span class="status-dot dot-cyan" aria-hidden="true"></span>
-                <span class="mono text-xs font-bold">2.4M Pts / Sec</span>
+              <div class="floating-badge badge-mandapa-mr glass-badge" aria-label="Point density metric">
+                <span class="status-dot dot-purple" aria-hidden="true"></span>
+                <span class="mono text-xs font-bold">18.4M Points Captured</span>
               </div>
 
-              <div class="floating-badge badge-float-safe-3" aria-label="BIM compatibility metric">
-                <span class="status-dot dot-blue" aria-hidden="true"></span>
-                <span class="mono text-xs font-bold">BIM LOD 500 Ready</span>
+              <div class="floating-badge badge-mandapa-bl glass-badge" aria-label="BIM compatibility metric">
+                <span class="status-dot dot-orange" aria-hidden="true"></span>
+                <span class="mono text-xs font-bold">Revit LOD 400 Solid</span>
               </div>
 
-              <!-- Main Interactive Metrology Progression Card -->
-              <div class="metrology-stage-card bento-card">
+              <!-- Main CAD Viewport Card Container -->
+              <div class="cad-viewport-card bento-card">
                 
-                <!-- Stage Header Readout -->
-                <div class="stage-header">
-                  <div class="stage-indicator mono">
-                    <span class="text-laser font-bold" id="stage-num-label">STAGE 01</span>
-                    <span class="text-muted">/</span>
-                    <span class="text-high font-bold" id="stage-name-label">PHYSICAL PART</span>
+                <!-- Top Viewport Header Bar -->
+                <div class="viewport-header-bar mono text-xs">
+                  <div class="header-left">
+                    <span class="text-laser font-bold">ASSET //</span>
+                    <span class="text-high font-bold">MANDAPA_PILLAR_04.E57</span>
                   </div>
-                  <div class="stage-telemetry mono text-xs" id="stage-telemetry-badge">
-                    TOLERANCE: ASME Y14.5M
+                  <div class="header-right">
+                    <span class="status-dot dot-green" aria-hidden="true"></span>
+                    <span class="font-bold text-pass">REG_ERROR: 0.4mm</span>
                   </div>
                 </div>
 
-                <!-- 5-Stage Flange Canvas -->
-                <div class="flange-canvas-box">
-                  <canvas id="hero-flange-canvas" width="440" height="280" aria-label="Interactive 5-stage metrology flange visualization"></canvas>
+                <!-- 3D Pillar Canvas Viewport -->
+                <div class="pillar-canvas-container">
+                  <canvas id="mandapa-pillar-canvas" width="480" height="360" aria-label="3D CAD viewport showing Ornate Indian Heritage Temple Pillar sliced into LiDAR point cloud, photogrammetry wireframe, and parametric BIM CAD"></canvas>
+                  <div class="canvas-drag-hint mono" aria-hidden="true">DRAG TO ORBIT 3D MODEL</div>
+                </div>
+
+                <!-- Bottom Footer Bar -->
+                <div class="viewport-footer-bar mono text-xs">
+                  <div class="footer-telemetry">
+                    <span class="text-muted">CRS:</span>
+                    <span class="text-high font-bold">WGS84 / UTM 43N</span>
+                  </div>
                   
-                  <!-- Deviation Colormap Scale Bar (Visible on Stage 5) -->
-                  <div class="flange-scale-bar-overlay" id="flange-scale-bar" style="display:none;" aria-hidden="true">
-                    <div class="scale-labels mono text-xs">
-                      <span>-0.20mm</span>
-                      <span class="text-pass">0.00mm</span>
-                      <span>+0.20mm</span>
-                    </div>
-                    <div class="spectrum-bar"></div>
+                  <!-- Segmented Layer Focus Toggle -->
+                  <div class="footer-segmented-pills" role="tablist" aria-label="Reality-Capture Layer Focus">
+                    <button class="layer-pill-btn active" data-layer="all" role="tab" aria-selected="true">All Layers</button>
+                    <button class="layer-pill-btn" data-layer="cloud" role="tab" aria-selected="false">Point Cloud</button>
+                    <button class="layer-pill-btn" data-layer="wire" role="tab" aria-selected="false">Wire Mesh</button>
+                    <button class="layer-pill-btn" data-layer="bim" role="tab" aria-selected="false">BIM CAD</button>
                   </div>
-                </div>
-
-                <!-- Stage Selector Navigation Pills -->
-                <div class="stage-pills-bar" role="tablist" aria-label="Metrology Progression Stages">
-                  <button class="stage-pill-btn active" data-stage="0" role="tab" aria-selected="true" title="Physical Part">
-                    <span class="mono">01</span> Part
-                  </button>
-                  <button class="stage-pill-btn" data-stage="1" role="tab" aria-selected="false" title="Laser Scanning">
-                    <span class="mono">02</span> Laser
-                  </button>
-                  <button class="stage-pill-btn" data-stage="2" role="tab" aria-selected="false" title="Raw Point Cloud">
-                    <span class="mono">03</span> Cloud
-                  </button>
-                  <button class="stage-pill-btn" data-stage="3" role="tab" aria-selected="false" title="Parametric CAD">
-                    <span class="mono">04</span> CAD
-                  </button>
-                  <button class="stage-pill-btn" data-stage="4" role="tab" aria-selected="false" title="Deviation Colormap">
-                    <span class="mono">05</span> Heatmap
-                  </button>
-                  <button id="stage-play-pause-btn" class="stage-pill-btn auto-toggle" aria-label="Toggle Auto-Cycle">
-                    <svg id="stage-play-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                      <rect x="6" y="4" width="4" height="16"></rect>
-                      <rect x="14" y="4" width="4" height="16"></rect>
-                    </svg>
-                  </button>
                 </div>
 
               </div>
@@ -126,360 +108,419 @@ export function Hero() {
 }
 
 export function initHeroFlangeCanvas() {
-  const canvas = document.getElementById('hero-flange-canvas');
+  const canvas = document.getElementById('mandapa-pillar-canvas');
   if (!canvas) return;
 
   const ctx = canvas.getContext('2d');
   const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const stageNumLabel = document.getElementById('stage-num-label');
-  const stageNameLabel = document.getElementById('stage-name-label');
-  const stageTeleBadge = document.getElementById('stage-telemetry-badge');
-  const scaleBar = document.getElementById('flange-scale-bar');
-  const pills = document.querySelectorAll('.stage-pill-btn[data-stage]');
-  const playBtn = document.getElementById('stage-play-pause-btn');
-
-  let currentStage = 0; // 0: Part, 1: Laser, 2: Point Cloud, 3: CAD, 4: Heatmap
-  let autoCycle = !RM;
-  let cycleTimer = null;
-  let laserX = 40;
-  let laserDir = 1;
-  let animFrameId = null;
-
-  const stageMeta = [
-    { num: 'STAGE 01', name: 'PHYSICAL PART', tele: 'MACHINED ALLOY STEEL' },
-    { num: 'STAGE 02', name: 'LASER SCANNING', tele: 'BLUE LIGHT 450nm SWEEP' },
-    { num: 'STAGE 03', name: 'RAW POINT CLOUD', tele: '2,400,000 PTS / SEC' },
-    { num: 'STAGE 04', name: 'PARAMETRIC CAD', tele: 'NURBS &bull; &Oslash; 170.00 &plusmn;0.02' },
-    { num: 'STAGE 05', name: 'DEVIATION HEATMAP', tele: 'NOMINAL PASS &bull; &plusmn;0.018mm' }
-  ];
-
   let width = 0;
   let height = 0;
   let dpr = 1;
+  let yaw = 0.52;
+  let pitch = 0.28;
+  let isDragging = false;
+  let lastX = 0;
+  let lastY = 0;
+  let autoRotate = !RM;
+  let activeLayer = 'all'; // 'all' | 'cloud' | 'wire' | 'bim'
+  let laserPulse = 0;
+
+  // Geometry Definition for Ornate Indian Mandapa Pillar
+  // Y ranges from -1.35 (plinth ground) to +1.35 (carved bracket capital)
+  // Section 1: Top (Point Cloud) -> Y > 0.40
+  // Section 2: Middle (Photogrammetry Wireframe) -> -0.45 <= Y <= 0.40
+  // Section 3: Bottom (Parametric BIM Solid) -> Y < -0.45
+
+  const cloudPoints = [];
+  // 1. Generate dense LiDAR point cloud for the ornate capital brackets
+  const capitalLevels = 22;
+  for (let cl = 0; cl < capitalLevels; cl++) {
+    const v = cl / capitalLevels;
+    const y = 0.42 + v * 0.92;
+    // Flared corbel curves with stepped roll moldings
+    let r = 0.35 + Math.sin(v * Math.PI) * 0.28;
+    if (v > 0.65) r += (v - 0.65) * 0.45; // extended bracket arm
+
+    const ptsCount = 28 + Math.floor(v * 16);
+    for (let p = 0; p < ptsCount; p++) {
+      const angle = (p / ptsCount) * Math.PI * 2;
+      // 4-corner bracket emphasis (Mandapa roll corbel)
+      const bracketExt = 0.12 * Math.cos(4 * angle);
+      const rad = r + bracketExt + (Math.random() - 0.5) * 0.04;
+      const x = Math.cos(angle) * rad;
+      const z = Math.sin(angle) * rad;
+      cloudPoints.push({ x, y, z, elevationRatio: v });
+    }
+  }
+
+  // 2. Middle Wireframe Shaft (16-faceted column with center ornamental band)
+  const wireRings = 10;
+  const wireSectors = 16;
+  const wireVerts = [];
+  const wireFaces = [];
+
+  for (let r = 0; r <= wireRings; r++) {
+    const v = r / wireRings;
+    const y = -0.44 + v * 0.84;
+    // Central ornamental band at mid-shaft
+    const bandBump = Math.exp(-((v - 0.5) ** 2) / 0.02) * 0.08;
+    const rad = 0.32 + bandBump;
+
+    for (let s = 0; s < wireSectors; s++) {
+      const angle = (s / wireSectors) * Math.PI * 2;
+      wireVerts.push({
+        x: Math.cos(angle) * rad,
+        y: y,
+        z: Math.sin(angle) * rad
+      });
+    }
+  }
+
+  for (let r = 0; r < wireRings; r++) {
+    for (let s = 0; s < wireSectors; s++) {
+      const i0 = r * wireSectors + s;
+      const i1 = r * wireSectors + ((s + 1) % wireSectors);
+      const i2 = (r + 1) * wireSectors + ((s + 1) % wireSectors);
+      const i3 = (r + 1) * wireSectors + s;
+      // Triangulated photogrammetry mesh
+      wireFaces.push([i0, i1, i2]);
+      wireFaces.push([i0, i2, i3]);
+    }
+  }
+
+  // 3. Bottom Parametric BIM Solid Geometry (Plinth, moldings, and pedestal)
+  // Stepped square plinth base
+  const plinthBlocks = [
+    { y0: -1.35, y1: -1.15, size: 0.58 }, // Ground Upapitha
+    { y0: -1.15, y1: -0.95, size: 0.50 }, // Lotus molding base
+    { y0: -0.95, y1: -0.75, size: 0.44 }, // Upper pedestal
+    { y0: -0.75, y1: -0.46, size: 0.38 }  // Transition square block
+  ];
 
   function resize() {
     const rect = canvas.getBoundingClientRect();
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = canvas.width = rect.width * dpr;
-    height = canvas.height = (rect.height || 260) * dpr;
+    height = canvas.height = (rect.height || 360) * dpr;
   }
 
-  // Precomputed flange geometry points for isometric projection
-  const flangeRadius = 110;
-  const hubRadius = 60;
-  const boreRadius = 32;
-  const boltCircleRad = 85;
-  const boltCount = 6;
-  const cx = 220;
-  const cy = 135;
+  function project(x, y, z) {
+    const cy = Math.cos(yaw);
+    const sy = Math.sin(yaw);
+    const x1 = x * cy - z * sy;
+    const z1 = x * sy + z * cy;
 
-  // Cloud dots for Stage 3
-  const cloudDots = [];
-  for (let i = 0; i < 380; i++) {
-    const angle = Math.random() * Math.PI * 2;
-    const r = Math.sqrt(Math.random()) * (flangeRadius - boreRadius) + boreRadius;
-    const px = cx + Math.cos(angle) * r;
-    const py = cy + Math.sin(angle) * (r * 0.58) + (Math.random() - 0.5) * 6;
-    const dev = (Math.random() - 0.5) * 0.3; // deviation
-    cloudDots.push({ x: px, y: py, dev });
+    const cp = Math.cos(pitch);
+    const sp = Math.sin(pitch);
+    const y2 = y * cp - z1 * sp;
+    const z2 = y * sp + z1 * cp;
+
+    const scale = Math.min(width, height) * 0.31;
+    const fov = 3.6 / (3.6 + z2);
+
+    return {
+      px: width / 2 + x1 * scale * fov,
+      py: height / 2 - y2 * scale * fov,
+      depth: z2,
+      scale: fov
+    };
   }
 
-  function setStage(index) {
-    currentStage = index % 5;
-    pills.forEach((p, i) => {
-      p.classList.toggle('active', i === currentStage);
-      p.setAttribute('aria-selected', String(i === currentStage));
-    });
-
-    if (stageNumLabel) stageNumLabel.textContent = stageMeta[currentStage].num;
-    if (stageNameLabel) stageNameLabel.textContent = stageMeta[currentStage].name;
-    if (stageTeleBadge) stageTeleBadge.innerHTML = stageMeta[currentStage].tele;
-
-    if (scaleBar) {
-      scaleBar.style.display = currentStage === 4 ? 'block' : 'none';
+  // Color lookup for Top Thermal LiDAR point cloud
+  function getThermalLiDARColor(t, isDark) {
+    // Gradient: #2563EB (Blue) -> #7C3AED (Purple) -> #DB2777 (Pink) -> #EA580C (Orange)
+    if (t < 0.33) {
+      return '#2563EB'; // Blue
+    } else if (t < 0.66) {
+      return '#7C3AED'; // Purple
+    } else if (t < 0.85) {
+      return '#DB2777'; // Pink
+    } else {
+      return '#EA580C'; // Warm Orange
     }
   }
 
   function render() {
     ctx.clearRect(0, 0, width, height);
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const s = dpr;
 
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.04)';
-    const baseMetalStroke = isDark ? '#E2E8F0' : '#1E293B';
+    laserPulse += 0.035;
 
-    // 1. Engineering coordinate background grid
-    ctx.strokeStyle = gridColor;
+    // A. 3D Coordinate Ground Grid Plane (Y = -1.35)
     ctx.lineWidth = 1 * s;
-    for (let x = 20; x < 440; x += 40) {
+    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.05)';
+    for (let gx = -0.9; gx <= 0.9; gx += 0.22) {
+      const p0 = project(gx, -1.35, -0.9);
+      const p1 = project(gx, -1.35, 0.9);
       ctx.beginPath();
-      ctx.moveTo(x * s, 0);
-      ctx.lineTo(x * s, 260 * s);
+      ctx.moveTo(p0.px, p0.py);
+      ctx.lineTo(p1.px, p1.py);
+      ctx.stroke();
+
+      const p2 = project(-0.9, -1.35, gx);
+      const p3 = project(0.9, -1.35, gx);
+      ctx.beginPath();
+      ctx.moveTo(p2.px, p2.py);
+      ctx.lineTo(p3.px, p3.py);
       ctx.stroke();
     }
-    for (let y = 20; y < 260; y += 40) {
-      ctx.beginPath();
-      ctx.moveTo(0, y * s);
-      ctx.lineTo(440 * s, y * s);
-      ctx.stroke();
-    }
 
-    ctx.save();
-    ctx.scale(s, s);
+    // B. Thin 1px Dashed Bounding Box around Pillar
+    ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.25)' : 'rgba(2, 132, 199, 0.22)';
+    ctx.setLineDash([3 * s, 4 * s]);
+    const bSize = 0.68;
+    const bY0 = -1.35;
+    const bY1 = 1.35;
 
-    // Render based on currentStage:
-    if (currentStage === 0) {
-      // STAGE 01: Physical Part (Shaded Metallic Isometric Flange)
-      const grad = ctx.createLinearGradient(cx - 100, cy - 60, cx + 100, cy + 60);
-      grad.addColorStop(0, isDark ? '#2D3748' : '#E2E8F0');
-      grad.addColorStop(0.5, isDark ? '#4A5568' : '#CBD5E1');
-      grad.addColorStop(1, isDark ? '#1A202C' : '#94A3B8');
+    const b0 = project(-bSize, bY0, -bSize);
+    const b1 = project(bSize, bY0, -bSize);
+    const b2 = project(bSize, bY0, bSize);
+    const b3 = project(-bSize, bY0, bSize);
 
-      // Outer rim
-      ctx.fillStyle = grad;
-      ctx.strokeStyle = baseMetalStroke;
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, flangeRadius, flangeRadius * 0.58, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
+    const t0 = project(-bSize, bY1, -bSize);
+    const t1 = project(bSize, bY1, -bSize);
+    const t2 = project(bSize, bY1, bSize);
+    const t3 = project(-bSize, bY1, bSize);
 
-      // Lower flange thickness bevel
-      ctx.beginPath();
-      ctx.ellipse(cx, cy + 18, flangeRadius, flangeRadius * 0.58, 0, 0, Math.PI);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(cx - flangeRadius, cy);
-      ctx.lineTo(cx - flangeRadius, cy + 18);
-      ctx.moveTo(cx + flangeRadius, cy);
-      ctx.lineTo(cx + flangeRadius, cy + 18);
-      ctx.stroke();
+    ctx.beginPath();
+    // bottom ring
+    ctx.moveTo(b0.px, b0.py); ctx.lineTo(b1.px, b1.py); ctx.lineTo(b2.px, b2.py); ctx.lineTo(b3.px, b3.py); ctx.closePath();
+    // top ring
+    ctx.moveTo(t0.px, t0.py); ctx.lineTo(t1.px, t1.py); ctx.lineTo(t2.px, t2.py); ctx.lineTo(t3.px, t3.py); ctx.closePath();
+    // upright columns
+    ctx.moveTo(b0.px, b0.py); ctx.lineTo(t0.px, t0.py);
+    ctx.moveTo(b1.px, b1.py); ctx.lineTo(t1.px, t1.py);
+    ctx.moveTo(b2.px, b2.py); ctx.lineTo(t2.px, t2.py);
+    ctx.moveTo(b3.px, b3.py); ctx.lineTo(t3.px, t3.py);
+    ctx.stroke();
+    ctx.setLineDash([]); // Reset line dash
 
-      // Hub boss
-      ctx.fillStyle = isDark ? '#374151' : '#F1F5F9';
-      ctx.beginPath();
-      ctx.ellipse(cx, cy - 8, hubRadius, hubRadius * 0.58, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
+    // C. X/Y/Z Axis Gizmo at Bottom-Left Ground Origin
+    const gOrigin = project(-0.75, -1.35, -0.75);
+    const gX = project(-0.55, -1.35, -0.75);
+    const gY = project(-0.75, -1.15, -0.75);
+    const gZ = project(-0.75, -1.35, -0.55);
 
-      // Central Bore
-      ctx.fillStyle = isDark ? '#111827' : '#64748B';
-      ctx.beginPath();
-      ctx.ellipse(cx, cy - 8, boreRadius, boreRadius * 0.58, 0, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
+    ctx.lineWidth = 1.8 * s;
+    // X Axis (Red/Coral)
+    ctx.strokeStyle = '#EF4444';
+    ctx.beginPath(); ctx.moveTo(gOrigin.px, gOrigin.py); ctx.lineTo(gX.px, gX.py); ctx.stroke();
+    // Y Axis (Green/Emerald)
+    ctx.strokeStyle = '#10B981';
+    ctx.beginPath(); ctx.moveTo(gOrigin.px, gOrigin.py); ctx.lineTo(gY.px, gY.py); ctx.stroke();
+    // Z Axis (Blue/Laser)
+    ctx.strokeStyle = '#0284C7';
+    ctx.beginPath(); ctx.moveTo(gOrigin.px, gOrigin.py); ctx.lineTo(gZ.px, gZ.py); ctx.stroke();
 
-      // Bolt holes
-      for (let i = 0; i < boltCount; i++) {
-        const a = (i / boltCount) * Math.PI * 2;
-        const bx = cx + Math.cos(a) * boltCircleRad;
-        const by = cy + Math.sin(a) * (boltCircleRad * 0.58);
-        ctx.fillStyle = isDark ? '#111827' : '#475569';
+    ctx.fillStyle = isDark ? '#9CA3AF' : '#4B5563';
+    ctx.font = `600 ${8 * s}px "Sora", sans-serif`;
+    ctx.fillText('X', gX.px + 2, gX.py);
+    ctx.fillText('Y', gY.px, gY.py - 2);
+    ctx.fillText('Z', gZ.px + 2, gZ.py);
+
+    // =====================================================================
+    // LAYER 3 (BOTTOM): Parametric BIM Solid Geometry
+    // =====================================================================
+    if (activeLayer === 'all' || activeLayer === 'bim') {
+      plinthBlocks.forEach((block, bIdx) => {
+        const hs = block.size;
+        const c0 = project(-hs, block.y0, -hs);
+        const c1 = project(hs, block.y0, -hs);
+        const c2 = project(hs, block.y0, hs);
+        const c3 = project(-hs, block.y0, hs);
+
+        const u0 = project(-hs, block.y1, -hs);
+        const u1 = project(hs, block.y1, -hs);
+        const u2 = project(hs, block.y1, hs);
+        const u3 = project(-hs, block.y1, hs);
+
+        // Filled shaded solid faces (BIM clay shading)
+        const fillSolid = isDark ? 'rgba(30, 41, 59, 0.85)' : 'rgba(255, 255, 255, 0.95)';
+        const fillSide = isDark ? 'rgba(15, 23, 42, 0.9)' : 'rgba(241, 245, 249, 0.9)';
+
+        // Top face
+        ctx.fillStyle = fillSolid;
         ctx.beginPath();
-        ctx.ellipse(bx, by, 7, 4.2, 0, 0, Math.PI * 2);
+        ctx.moveTo(u0.px, u0.py); ctx.lineTo(u1.px, u1.py); ctx.lineTo(u2.px, u2.py); ctx.lineTo(u3.px, u3.py);
+        ctx.closePath();
         ctx.fill();
+
+        // Front faces
+        ctx.fillStyle = fillSide;
+        ctx.beginPath();
+        ctx.moveTo(c1.px, c1.py); ctx.lineTo(c2.px, c2.py); ctx.lineTo(u2.px, u2.py); ctx.lineTo(u1.px, u1.py);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(c2.px, c2.py); ctx.lineTo(c3.px, c3.py); ctx.lineTo(u3.px, u3.py); ctx.lineTo(u2.px, u2.py);
+        ctx.closePath();
+        ctx.fill();
+
+        // Sharp CAD Orthographic Elevation Edges
+        ctx.strokeStyle = isDark ? '#E2E8F0' : '#111827';
+        ctx.lineWidth = 1.6 * s;
         ctx.stroke();
-      }
 
-    } else if (currentStage === 1) {
-      // STAGE 02: Laser Scanning (Active Laser Line & Scanner Beam)
-      laserX += 2.2 * laserDir;
-      if (laserX > 370) laserDir = -1;
-      if (laserX < 70) laserDir = 1;
-
-      // Base part silhouette
-      ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.15)';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, flangeRadius, flangeRadius * 0.58, 0, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.ellipse(cx, cy - 8, hubRadius, hubRadius * 0.58, 0, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Scanner Origin Head at top
-      const scanHeadX = 220;
-      const scanHeadY = 28;
-      ctx.fillStyle = '#0284C7';
-      ctx.beginPath();
-      ctx.arc(scanHeadX, scanHeadY, 6, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Laser Fan Beam (Cyan Translucent Triangle)
-      ctx.fillStyle = 'rgba(2, 132, 199, 0.12)';
-      ctx.beginPath();
-      ctx.moveTo(scanHeadX, scanHeadY);
-      ctx.lineTo(laserX - 25, 220);
-      ctx.lineTo(laserX + 25, 220);
-      ctx.closePath();
-      ctx.fill();
-
-      // Sharp Laser Line on Geometry
-      ctx.strokeStyle = '#00D2FF';
-      ctx.lineWidth = 2.5;
-      ctx.shadowColor = '#00D2FF';
-      ctx.shadowBlur = 10;
-      ctx.beginPath();
-      ctx.moveTo(laserX, 60);
-      ctx.lineTo(laserX, 210);
-      ctx.stroke();
-      ctx.shadowBlur = 0; // reset
-
-      // Laser Contact Pulse
-      ctx.fillStyle = '#FFFFFF';
-      ctx.beginPath();
-      ctx.arc(laserX, cy, 4, 0, Math.PI * 2);
-      ctx.fill();
-
-    } else if (currentStage === 2) {
-      // STAGE 03: Raw Point Cloud (Dense Colored Coordinate Dots)
-      cloudDots.forEach(p => {
-        ctx.fillStyle = '#0284C7';
+        // Internal molding bevel line
+        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.18)';
+        ctx.lineWidth = 1 * s;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
-        ctx.fill();
+        const m0 = project(-hs * 0.9, block.y0 + (block.y1 - block.y0) * 0.5, hs);
+        const m1 = project(hs * 0.9, block.y0 + (block.y1 - block.y0) * 0.5, hs);
+        ctx.moveTo(m0.px, m0.py); ctx.lineTo(m1.px, m1.py);
+        ctx.stroke();
       });
 
-      // Flange outer ring boundary in point dots
-      for (let a = 0; a < Math.PI * 2; a += 0.08) {
-        const px = cx + Math.cos(a) * flangeRadius + (Math.random() - 0.5) * 2;
-        const py = cy + Math.sin(a) * (flangeRadius * 0.58) + (Math.random() - 0.5) * 2;
-        ctx.fillStyle = '#38BDF8';
-        ctx.fillRect(px, py, 1.8, 1.8);
-      }
+      // Dimension extension lines and ticks for BIM Bottom
+      const dimX = -0.72;
+      const dP0 = project(dimX, -1.35, 0);
+      const dP1 = project(dimX, -0.46, 0);
 
-      // Scanner rays
-      ctx.strokeStyle = 'rgba(2, 132, 199, 0.2)';
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      ctx.moveTo(220, 28);
-      ctx.lineTo(cx - 60, cy);
-      ctx.moveTo(220, 28);
-      ctx.lineTo(cx + 60, cy);
-      ctx.stroke();
-
-    } else if (currentStage === 3) {
-      // STAGE 04: Parametric CAD Wireframe with GD&T Callouts
       ctx.strokeStyle = '#0284C7';
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 1.2 * s;
       ctx.beginPath();
-      ctx.ellipse(cx, cy, flangeRadius, flangeRadius * 0.58, 0, 0, Math.PI * 2);
+      ctx.moveTo(dP0.px - 6 * s, dP0.py); ctx.lineTo(dP0.px + 6 * s, dP0.py);
+      ctx.moveTo(dP1.px - 6 * s, dP1.py); ctx.lineTo(dP1.px + 6 * s, dP1.py);
+      ctx.moveTo(dP0.px, dP0.py); ctx.lineTo(dP1.px, dP1.py);
       ctx.stroke();
 
+      ctx.fillStyle = '#0284C7';
+      ctx.font = `600 ${8.5 * s}px "Sora", sans-serif`;
+      ctx.fillText('H = 1200mm', dP0.px - 44 * s, (dP0.py + dP1.py) / 2);
+    }
+
+    // =====================================================================
+    // SEPARATOR 2 (LOWER GLOWING LASER SCAN LINE at Y = -0.45)
+    // =====================================================================
+    if (activeLayer === 'all') {
+      const sepY2 = -0.45;
+      const sr = 0.42;
       ctx.strokeStyle = '#10B981';
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = (2 + Math.sin(laserPulse) * 0.6) * s;
       ctx.beginPath();
-      ctx.ellipse(cx, cy - 8, hubRadius, hubRadius * 0.58, 0, 0, Math.PI * 2);
+      for (let a = 0; a <= Math.PI * 2; a += 0.2) {
+        const pt = project(Math.cos(a) * sr, sepY2, Math.sin(a) * sr);
+        if (a === 0) ctx.moveTo(pt.px, pt.py);
+        else ctx.lineTo(pt.px, pt.py);
+      }
+      ctx.closePath();
       ctx.stroke();
+    }
 
+    // =====================================================================
+    // LAYER 2 (MIDDLE): Photogrammetry Wireframe Mesh
+    // =====================================================================
+    if (activeLayer === 'all' || activeLayer === 'wire') {
+      // Shaded matte white clay fill with crisp charcoal wireframe lines
+      const projWire = wireVerts.map(v => project(v.x, v.y, v.z));
+
+      // Draw triangulated mesh
+      ctx.fillStyle = isDark ? 'rgba(30, 41, 59, 0.75)' : 'rgba(255, 255, 255, 0.92)';
+      ctx.strokeStyle = isDark ? '#E2E8F0' : '#111111'; // Crisp charcoal wireframe
+      ctx.lineWidth = 1 * s;
+
+      wireFaces.forEach(f => {
+        const p0 = projWire[f[0]];
+        const p1 = projWire[f[1]];
+        const p2 = projWire[f[2]];
+
+        ctx.beginPath();
+        ctx.moveTo(p0.px, p0.py);
+        ctx.lineTo(p1.px, p1.py);
+        ctx.lineTo(p2.px, p2.py);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      });
+    }
+
+    // =====================================================================
+    // SEPARATOR 1 (UPPER GLOWING LASER SCAN LINE at Y = 0.40)
+    // =====================================================================
+    if (activeLayer === 'all') {
+      const sepY1 = 0.40;
+      const sr1 = 0.46;
+      ctx.strokeStyle = '#00D2FF';
+      ctx.lineWidth = (2.4 + Math.cos(laserPulse) * 0.8) * s;
       ctx.beginPath();
-      ctx.ellipse(cx, cy - 8, boreRadius, boreRadius * 0.58, 0, 0, Math.PI * 2);
+      for (let a = 0; a <= Math.PI * 2; a += 0.2) {
+        const pt = project(Math.cos(a) * sr1, sepY1, Math.sin(a) * sr1);
+        if (a === 0) ctx.moveTo(pt.px, pt.py);
+        else ctx.lineTo(pt.px, pt.py);
+      }
+      ctx.closePath();
       ctx.stroke();
+    }
 
-      // Centerlines
-      ctx.strokeStyle = '#64748B';
-      ctx.lineWidth = 1;
-      ctx.setLineDash([4, 4]);
-      ctx.beginPath();
-      ctx.moveTo(cx - flangeRadius - 15, cy);
-      ctx.lineTo(cx + flangeRadius + 15, cy);
-      ctx.moveTo(cx, cy - (flangeRadius * 0.58) - 15);
-      ctx.lineTo(cx, cy + (flangeRadius * 0.58) + 15);
-      ctx.stroke();
-      ctx.setLineDash([]);
+    // =====================================================================
+    // LAYER 1 (TOP): Raw LiDAR Point Cloud in Thermal Elevation Gradient
+    // =====================================================================
+    if (activeLayer === 'all' || activeLayer === 'cloud') {
+      const projCloud = cloudPoints.map(p => {
+        const pr = project(p.x, p.y, p.z);
+        return { ...p, ...pr };
+      }).sort((a, b) => b.depth - a.depth);
 
-      // GD&T Dimension Box & Callouts
-      ctx.fillStyle = isDark ? '#1F2937' : '#FFFFFF';
-      ctx.strokeStyle = '#10B981';
-      ctx.lineWidth = 1.5;
-      ctx.fillRect(cx + 65, cy - 65, 125, 24);
-      ctx.strokeRect(cx + 65, cy - 65, 125, 24);
-
-      ctx.fillStyle = isDark ? '#F9FAFB' : '#111827';
-      ctx.font = '600 10px "Sora", sans-serif';
-      ctx.fillText('Ø 170.00 ±0.02', cx + 72, cy - 49);
-
-      // Leader line
-      ctx.strokeStyle = '#10B981';
-      ctx.beginPath();
-      ctx.moveTo(cx + 65, cy - 53);
-      ctx.lineTo(cx + 45, cy - 35);
-      ctx.lineTo(cx + 30, cy - 20);
-      ctx.stroke();
-
-    } else if (currentStage === 4) {
-      // STAGE 05: Deviation Heatmap (Metrology Colormap)
-      // Draw surface deviation points
-      cloudDots.forEach(p => {
-        // Colormap: green nominal (0.0), cyan (-0.1), amber (+0.1), red (+0.2)
-        let col = '#10B981';
-        if (p.dev < -0.08) col = '#0284C7';
-        else if (p.dev > 0.12) col = '#EF4444';
-        else if (p.dev > 0.05) col = '#F59E0B';
+      projCloud.forEach(p => {
+        const col = getThermalLiDARColor(p.elevationRatio, isDark);
+        const ptSize = Math.max(1.4, 2.4 * p.scale * s);
 
         ctx.fillStyle = col;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
+        ctx.arc(p.px, p.py, ptSize, 0, Math.PI * 2);
         ctx.fill();
       });
-
-      // Outer nominal silhouette
-      ctx.strokeStyle = '#10B981';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.ellipse(cx, cy, flangeRadius, flangeRadius * 0.58, 0, 0, Math.PI * 2);
-      ctx.stroke();
-
-      // Live Metrology Inspection Tag
-      ctx.fillStyle = isDark ? 'rgba(16,185,129,0.15)' : 'rgba(16,185,129,0.1)';
-      ctx.strokeStyle = '#10B981';
-      ctx.lineWidth = 1;
-      ctx.fillRect(20, 20, 150, 26);
-      ctx.strokeRect(20, 20, 150, 26);
-      ctx.fillStyle = isDark ? '#F9FAFB' : '#111827';
-      ctx.font = '600 10px "Sora", sans-serif';
-      ctx.fillText('MEAN DEV: +0.012mm [PASS]', 26, 37);
     }
 
-    ctx.restore();
-    animFrameId = requestAnimationFrame(render);
+    // Subtle Auto Orbit
+    if (autoRotate && !isDragging && !RM) {
+      yaw += 0.004;
+    }
+
+    requestAnimationFrame(render);
   }
 
-  // Pill tab click handling
-  pills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      const stageIdx = parseInt(pill.dataset.stage, 10);
-      setStage(stageIdx);
+  // Pointer Drag & Orbit Controls
+  canvas.addEventListener('pointerdown', (e) => {
+    isDragging = true;
+    lastX = e.clientX;
+    lastY = e.clientY;
+    canvas.setPointerCapture(e.pointerId);
+  });
+
+  canvas.addEventListener('pointermove', (e) => {
+    if (!isDragging) return;
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    yaw += dx * 0.007;
+    pitch = Math.max(-0.6, Math.min(0.8, pitch + dy * 0.007));
+    lastX = e.clientX;
+    lastY = e.clientY;
+  });
+
+  canvas.addEventListener('pointerup', (e) => {
+    isDragging = false;
+    try { canvas.releasePointerCapture(e.pointerId); } catch(_) {}
+  });
+
+  // Layer Segmented Buttons Toggle
+  const layerBtns = document.querySelectorAll('.layer-pill-btn');
+  layerBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      layerBtns.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+      activeLayer = btn.dataset.layer;
     });
   });
 
-  // Auto-cycle timer
-  function startAutoCycle() {
-    if (cycleTimer) clearInterval(cycleTimer);
-    cycleTimer = setInterval(() => {
-      if (autoCycle) {
-        setStage(currentStage + 1);
-      }
-    }, 3200);
-  }
-
-  if (playBtn) {
-    playBtn.addEventListener('click', () => {
-      autoCycle = !autoCycle;
-      playBtn.classList.toggle('active', autoCycle);
-      const icon = document.getElementById('stage-play-icon');
-      if (icon) {
-        icon.innerHTML = autoCycle
-          ? '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>'
-          : '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
-      }
-    });
-  }
-
   window.addEventListener('resize', resize);
   resize();
-  setStage(0);
-  startAutoCycle();
   render();
 }
