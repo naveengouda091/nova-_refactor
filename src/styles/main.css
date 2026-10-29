@@ -31,10 +31,11 @@
   --accent-warn: #F59E0B;
   --accent-err: #EF4444;
 
-  /* Typography */
-  --font-display: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-body: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', SFMono-Regular, Consolas, monospace;
+  /* Unified Font Everywhere: Sora */
+  --font-family: 'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: var(--font-family);
+  --font-body: var(--font-family);
+  --font-mono: var(--font-family);
 
   /* Spacing & Rhythm */
   --radius-xs: 4px;
@@ -81,15 +82,16 @@
   --shadow-float: 0 12px 32px -6px rgba(0, 0, 0, 0.6);
 }
 
-/* Base Reset */
+/* Base Reset & Global Unified Typography */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: var(--font-family);
 }
 
 html {
-  font-family: var(--font-body);
+  font-family: var(--font-family);
   background-color: var(--bg-primary);
   color: var(--text-high);
   scroll-behavior: smooth;
@@ -99,6 +101,7 @@ html {
 }
 
 body {
+  font-family: var(--font-family);
   min-height: 100vh;
   overflow-x: clip;
   line-height: 1.55;
@@ -111,7 +114,7 @@ body {
 .whitespace-nowrap { white-space: nowrap !important; }
 .flex-shrink-0 { flex-shrink: 0 !important; }
 .font-bold { font-weight: 700; }
-.mono { font-family: var(--font-mono); letter-spacing: -0.02em; }
+.mono { font-family: var(--font-family); letter-spacing: -0.01em; }
 .text-xs { font-size: 0.75rem; }
 .text-sm { font-size: 0.875rem; }
 .text-laser { color: var(--accent-laser); }

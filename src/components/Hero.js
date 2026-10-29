@@ -397,7 +397,7 @@ export function initHeroFlangeCanvas() {
       ctx.strokeRect(cx + 65, cy - 65, 125, 24);
 
       ctx.fillStyle = isDark ? '#F9FAFB' : '#111827';
-      ctx.font = '10px "JetBrains Mono", monospace';
+      ctx.font = '600 10px "Sora", sans-serif';
       ctx.fillText('Ø 170.00 ±0.02', cx + 72, cy - 49);
 
       // Leader line
@@ -438,7 +438,7 @@ export function initHeroFlangeCanvas() {
       ctx.fillRect(20, 20, 150, 26);
       ctx.strokeRect(20, 20, 150, 26);
       ctx.fillStyle = isDark ? '#F9FAFB' : '#111827';
-      ctx.font = '10px "JetBrains Mono", monospace';
+      ctx.font = '600 10px "Sora", sans-serif';
       ctx.fillText('MEAN DEV: +0.012mm [PASS]', 26, 37);
     }
 
