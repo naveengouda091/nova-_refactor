@@ -1,34 +1,29 @@
 export function RFQCalculator() {
   return `
-    <section id="rfq-calculator" class="rfq-section section" aria-labelledby="rfq-heading">
+    <section id="rfq-calculator" class="rfq-section section" aria-labelledby="rfq-title">
       <div class="container">
         
-        <div class="section-badge-center">
-          <div class="badge">
-            <span class="badge-dot" aria-hidden="true"></span>
-            <span>INSTANT PROJECT ESTIMATION</span>
+        <div class="section-head text-center">
+          <div class="eyebrow-tag">
+            <span class="eyebrow-dash" aria-hidden="true"></span>
+            <span>PROJECT SCOPING</span>
           </div>
+          <h2 id="rfq-title" class="section-title">
+            Instant Reality Capture Estimator
+          </h2>
+          <p class="section-desc mx-auto">
+            Configure your project parameters below for real-time cost brackets, turnaround timelines, and direct engineer dispatch.
+          </p>
         </div>
 
-        <h2 id="rfq-heading" class="section-title text-center">
-          Calculate Your Reality Capture Scope &amp; Instant RFQ
-        </h2>
-        <p class="section-desc text-center max-w-2xl mx-auto">
-          Configure project parameters below for immediate feasibility estimates, recommended hardware deployment, and turnaround schedules.
-        </p>
-
-        <!-- Calculator Card -->
-        <div class="rfq-calculator-card card">
+        <div class="bento-card spectrum-top">
           <div class="rfq-grid">
             
-            <!-- Left: Interactive Form Selectors -->
+            <!-- Left Form Inputs -->
             <form id="rfq-form" class="rfq-form" onsubmit="return false;">
               
-              <!-- Field 1: Service Track -->
               <div class="form-group">
-                <label for="rfq-service" class="form-label mono">
-                  01. SERVICE DISCIPLINE
-                </label>
+                <label for="rfq-service" class="form-label mono">01. DISCIPLINE</label>
                 <select id="rfq-service" class="form-select" aria-label="Select service discipline">
                   <option value="tls" selected>Terrestrial 3D Laser Scanning (BIM / Civil / Architecture)</option>
                   <option value="drone">Aerial UAV Photogrammetry &amp; Topographic GIS</option>
@@ -37,73 +32,65 @@ export function RFQCalculator() {
                 </select>
               </div>
 
-              <!-- Field 2: Approximate Area / Scale -->
               <div class="form-group">
-                <div class="label-split">
-                  <label for="rfq-area-slider" class="form-label mono">
-                    02. PROJECT AREA / ASSET SCALE
-                  </label>
-                  <span id="area-val-label" class="mono text-laser font-bold">1,500 m²</span>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <label for="rfq-area-slider" class="form-label mono">02. ASSET SCALE / AREA</label>
+                  <span id="area-val-label" class="mono font-bold text-laser">1,500 m²</span>
                 </div>
                 <input type="range" id="rfq-area-slider" class="form-range" min="100" max="25000" step="100" value="1500" aria-label="Project area in square meters">
-                <div class="range-markers mono text-xs text-muted">
-                  <span>100 m² (Small Part)</span>
+                <div class="range-markers mono">
+                  <span>100 m²</span>
                   <span>5,000 m²</span>
-                  <span>25,000+ m² (Campus)</span>
+                  <span>25,000+ m²</span>
                 </div>
               </div>
 
-              <!-- Field 3: Deliverable Specification -->
               <div class="form-group">
-                <label for="rfq-deliverable" class="form-label mono">
-                  03. REQUIRED DELIVERABLE PACKAGE
-                </label>
+                <label for="rfq-deliverable" class="form-label mono">03. DELIVERABLE PACKAGE</label>
                 <select id="rfq-deliverable" class="form-select" aria-label="Select deliverable package">
                   <option value="cloud">Registered Point Cloud Only (.E57, .LAS, .RCP)</option>
                   <option value="drawings">2D Vector CAD As-Builts (.DWG, .DXF)</option>
-                  <option value="bim300" selected>Autodesk Revit BIM LOD 300 (Standard Architecture &amp; MEP)</option>
-                  <option value="bim500">Autodesk Revit BIM LOD 500 (As-Built Asset Maintenance)</option>
-                  <option value="cad_solid">Parametric Solid CAD &amp; GD&amp;T Inspection (.STEP / SolidWorks)</option>
+                  <option value="bim300" selected>Autodesk Revit BIM LOD 300 (Standard AEC)</option>
+                  <option value="bim500">Autodesk Revit BIM LOD 500 (As-Built Assets)</option>
+                  <option value="cad_solid">Parametric Solid CAD &amp; GD&amp;T (.STEP / SolidWorks)</option>
                 </select>
               </div>
 
-              <!-- Field 4: Turnaround Priority -->
               <div class="form-group">
-                <label class="form-label mono">04. TIMELINE &amp; MOBILIZATION PRIORITY</label>
+                <label class="form-label mono">04. PRIORITY MOBILIZATION</label>
                 <div class="priority-radio-grid">
                   <label class="radio-card active">
                     <input type="radio" name="turnaround" value="standard" checked>
-                    <span class="radio-title">Standard Dispatch</span>
-                    <span class="radio-sub text-muted">5–7 Business Days</span>
+                    <span class="font-bold text-sm">Standard Dispatch</span>
+                    <span class="text-xs text-muted">5–7 Business Days</span>
                   </label>
                   <label class="radio-card">
                     <input type="radio" name="turnaround" value="expedited">
-                    <span class="radio-title text-laser">Expedited Priority</span>
-                    <span class="radio-sub text-muted">48–72 Hours Fast-Track</span>
+                    <span class="font-bold text-sm text-laser">Expedited Priority</span>
+                    <span class="text-xs text-muted">48–72 Hours Fast-Track</span>
                   </label>
                 </div>
               </div>
 
-              <!-- Contact Inputs -->
               <div class="contact-inputs-grid">
                 <div class="form-group">
-                  <label for="rfq-client-name" class="form-label mono text-xs">YOUR FULL NAME</label>
+                  <label for="rfq-client-name" class="form-label mono text-xs">YOUR NAME</label>
                   <input type="text" id="rfq-client-name" class="form-input" placeholder="e.g. Vikram Sharma" required>
                 </div>
                 <div class="form-group">
-                  <label for="rfq-client-email" class="form-label mono text-xs">OFFICIAL EMAIL</label>
+                  <label for="rfq-client-email" class="form-label mono text-xs">EMAIL</label>
                   <input type="email" id="rfq-client-email" class="form-input" placeholder="name@company.com" required>
                 </div>
               </div>
 
               <div class="form-group">
-                <label for="rfq-client-phone" class="form-label mono text-xs">PHONE / WHATSAPP NUMBER</label>
+                <label for="rfq-client-phone" class="form-label mono text-xs">PHONE NUMBER</label>
                 <input type="tel" id="rfq-client-phone" class="form-input" placeholder="+91 98765 43210" required>
               </div>
 
-              <button type="submit" id="submit-rfq-btn" class="btn btn-primary btn-large w-full">
+              <button type="submit" id="submit-rfq-btn" class="btn btn-primary" style="width:100%;">
                 <span>Submit RFQ &amp; Dispatch Project Scoping</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <line x1="5" y1="12" x2="19" y2="12"></line>
                   <polyline points="12 5 19 12 12 19"></polyline>
                 </svg>
@@ -111,69 +98,46 @@ export function RFQCalculator() {
 
             </form>
 
-            <!-- Right: Dynamic Telemetry Readout & Estimate -->
+            <!-- Right Telemetry Readout -->
             <div class="rfq-telemetry-panel">
-              <div class="panel-header mono text-laser">
-                <span>ESTIMATION TELEMETRY</span>
-                <span id="rfq-id" class="text-muted">RFQ-2026-NOV</span>
+              <div style="display:flex; justify-content:space-between; border-bottom:1px solid var(--border-line); padding-bottom:8px;">
+                <span class="mono text-xs font-bold">ESTIMATION TELEMETRY</span>
+                <span class="mono text-xs text-muted">MUMBAI LAB</span>
               </div>
 
-              <div class="telemetry-block">
-                <span class="telemetry-label mono">INDICATIVE SCOPE BRACKET</span>
+              <div>
+                <span class="mono text-xs text-muted">INDICATIVE BUDGET RANGE</span>
                 <div class="estimate-price-row">
-                  <span id="est-inr" class="price-val mono text-high">₹65,000 — ₹95,000</span>
-                  <span id="est-usd" class="price-sub mono text-muted">(~$780 — $1,150 USD)</span>
+                  <span id="est-inr" class="price-val mono font-bold">₹65,000 — ₹95,000</span>
+                  <span id="est-usd" class="mono text-muted text-xs">(~$780 — $1,150 USD)</span>
                 </div>
-                <p class="text-xs text-muted mt-1">
-                  *Final quote finalized upon site drawing review &amp; point density specifications.
-                </p>
               </div>
 
-              <div class="telemetry-specs-list">
+              <div style="border-top:1px solid var(--border-line); border-bottom:1px solid var(--border-line); padding:12px 0;">
                 <div class="spec-row">
-                  <span class="mono text-muted">ESTIMATED TURNAROUND:</span>
-                  <span id="est-days" class="mono text-pass font-bold">5–6 Business Days</span>
+                  <span class="mono text-muted">ESTIMATED TIMELINE:</span>
+                  <span id="est-days" class="mono font-bold" style="color:var(--accent-pass);">5–6 Business Days</span>
                 </div>
                 <div class="spec-row">
-                  <span class="mono text-muted">RECOMMENDED SENSORS:</span>
+                  <span class="mono text-muted">RECOMMENDED SENSOR:</span>
                   <span id="est-sensor" class="mono text-high">Faro Focus LiDAR + HDR</span>
                 </div>
                 <div class="spec-row">
-                  <span class="mono text-muted">TARGET POINT DENSITY:</span>
+                  <span class="mono text-muted">GRID DENSITY:</span>
                   <span id="est-density" class="mono text-laser">3mm @ 10m Ground Grid</span>
                 </div>
                 <div class="spec-row">
-                  <span class="mono text-muted">MOBILIZATION ORIGIN:</span>
-                  <span class="mono text-high">Mumbai Hub &bull; Pan-India Transit</span>
-                </div>
-                <div class="spec-row">
-                  <span class="mono text-muted">QUALITY ASSURANCE:</span>
-                  <span class="mono text-pass">ISO 9001 &bull; ASME Y14.5M</span>
+                  <span class="mono text-muted">LAB ORIGIN:</span>
+                  <span class="mono">Mumbai HQ &bull; Pan-India</span>
                 </div>
               </div>
 
-              <!-- Quick Direct Contact Links -->
-              <div class="rfq-contact-box">
-                <div class="direct-label mono text-xs text-muted">PREFER DIRECT LAB CONSULTATION?</div>
-                <div class="direct-links-flex">
-                  <a href="mailto:darshan@novascan3d.in" class="direct-link mono">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                    <span>darshan@novascan3d.in</span>
-                  </a>
-                  <a href="tel:+918380809436" class="direct-link mono">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                    <span>+91 83808 09436</span>
-                  </a>
-                </div>
+              <div style="font-size:0.8rem; color:var(--text-muted);">
+                Need custom metrology consultation? Email <a href="mailto:darshan@novascan3d.in" class="gradient-hover-link font-bold text-high">darshan@novascan3d.in</a> or call <a href="tel:+918380809436" class="gradient-hover-link font-bold text-high">+91 83808 09436</a>.
               </div>
 
-              <!-- Submission Feedback State -->
-              <div id="rfq-success-alert" class="rfq-success-alert" style="display:none;" role="alert">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-pass)" stroke-width="2.5" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                <div>
-                  <h4 class="text-sm font-bold text-pass">RFQ Received Successfully!</h4>
-                  <p class="text-xs text-muted mt-1">Our engineering lead will review your specifications and send a formal estimate within 4 business hours.</p>
-                </div>
+              <div id="rfq-success-alert" style="display:none; padding:12px; border-radius:var(--radius-sm); background:rgba(16,185,129,0.1); border:1px solid var(--accent-pass);" role="alert">
+                <span class="mono text-xs font-bold" style="color:var(--accent-pass);">RFQ Received &bull; Technical assessment dispatched within 4 hours.</span>
               </div>
 
             </div>
@@ -213,8 +177,7 @@ export function initRFQCalculator() {
       areaLabel.textContent = `${area.toLocaleString()} m²`;
     }
 
-    // Base rates per sq. meter based on service & fidelity
-    let baseRate = 35; // INR per sq m
+    let baseRate = 35;
     let days = Math.max(3, Math.ceil(area / 1500) + 2);
     let sensor = 'Faro Focus / Leica RTC360 LiDAR';
     let density = '3mm @ 10m Precision Grid';
@@ -241,7 +204,6 @@ export function initRFQCalculator() {
     if (deliverable === 'cloud') baseRate *= 0.75;
 
     let totalINR = Math.round(area * baseRate);
-    // minimum engagement floor
     totalINR = Math.max(35000, totalINR);
 
     if (isExpedited) {
@@ -271,7 +233,6 @@ export function initRFQCalculator() {
     recalculate();
   }));
 
-  // Handle Form Submission
   if (rfqForm) {
     rfqForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -282,7 +243,6 @@ export function initRFQCalculator() {
       const serviceText = serviceSel.options[serviceSel.selectedIndex].text;
       const delivText = deliverableSel.options[deliverableSel.selectedIndex].text;
 
-      // Construct mailto
       const subject = encodeURIComponent(`NovaScan 3D RFQ: ${serviceText} (${area} m²)`);
       const body = encodeURIComponent(
         `Dear NovaScan 3D Engineering Team,\n\n` +
@@ -296,11 +256,10 @@ export function initRFQCalculator() {
         `Looking forward to your project assessment.\n\nBest regards,\n${name}`
       );
 
-      // Open mailto link
       window.open(`mailto:darshan@novascan3d.in?subject=${subject}&body=${body}`, '_blank');
 
       if (successAlert) {
-        successAlert.style.display = 'flex';
+        successAlert.style.display = 'block';
       }
     });
   }

@@ -1,49 +1,53 @@
 import './styles/main.css';
 
+import { TactileBackground, initTactileBackground } from './components/TactileBackground.js';
 import { Header } from './components/Header.js';
 import { Hero } from './components/Hero.js';
-import { CanvasViewer, initCanvasViewer } from './components/CanvasViewer.js';
 import { MetricsTicker } from './components/MetricsTicker.js';
-import { Capabilities, initCapabilities } from './components/Capabilities.js';
+import { CanvasViewer, initCanvasViewer } from './components/CanvasViewer.js';
+import { Capabilities } from './components/Capabilities.js';
 import { ComparisonSlider, initComparisonSlider } from './components/ComparisonSlider.js';
-import { SensorFusion } from './components/SensorFusion.js';
-import { CaseStudies } from './components/CaseStudies.js';
+import { WorkflowStrip } from './components/WorkflowStrip.js';
 import { RFQCalculator, initRFQCalculator } from './components/RFQCalculator.js';
 import { Footer } from './components/Footer.js';
 
-// Render the application tree
+// Mount Application Structure
 const app = document.getElementById('app');
 if (app) {
   app.innerHTML = `
+    ${TactileBackground()}
     ${Header()}
     <main id="main-content">
       ${Hero()}
-      ${CanvasViewer()}
       ${MetricsTicker()}
+      ${CanvasViewer()}
       ${Capabilities()}
       ${ComparisonSlider()}
-      ${SensorFusion()}
-      ${CaseStudies()}
+      <div id="workflow">
+        ${WorkflowStrip()}
+      </div>
       ${RFQCalculator()}
     </main>
     ${Footer()}
   `;
 }
 
-// Initialize Interactive Behaviors
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Theme Management (Dark / Light)
+  // 1. Tactile Proximity Canvas
+  initTactileBackground();
+
+  // 2. Theme Management (Light mode default #FAFAFA / Dark mode)
   const themeToggle = document.getElementById('theme-toggle');
   const html = document.documentElement;
   const darkIcon = document.querySelector('.theme-icon-dark');
   const lightIcon = document.querySelector('.theme-icon-light');
 
-  const savedTheme = localStorage.getItem('novascan_theme') || 'dark';
+  const savedTheme = localStorage.getItem('novascan_precision_theme') || 'light';
   setTheme(savedTheme);
 
   if (themeToggle) {
     themeToggle.addEventListener('click', () => {
-      const current = html.getAttribute('data-theme') || 'dark';
+      const current = html.getAttribute('data-theme') || 'light';
       const nextTheme = current === 'dark' ? 'light' : 'dark';
       setTheme(nextTheme);
     });
@@ -51,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function setTheme(t) {
     html.setAttribute('data-theme', t);
-    localStorage.setItem('novascan_theme', t);
+    localStorage.setItem('novascan_precision_theme', t);
     if (darkIcon && lightIcon) {
       if (t === 'dark') {
         darkIcon.style.display = 'block';
@@ -63,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 2. Mobile Drawer Navigation
+  // 3. Mobile Navigation Drawer
   const mobileBtn = document.getElementById('mobile-menu-btn');
   const mobileDrawer = document.getElementById('mobile-drawer');
 
@@ -75,7 +79,6 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileDrawer.setAttribute('aria-hidden', String(!isOpen));
     });
 
-    // Close on navigation click
     mobileDrawer.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         mobileDrawer.classList.remove('open');
@@ -85,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    // Close on Escape key
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && mobileDrawer.classList.contains('open')) {
         mobileDrawer.classList.remove('open');
@@ -97,39 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Number Counter Animation on Intersection
-  const metricCards = document.querySelectorAll('.metric-number');
-  const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  if (!RM && 'IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = parseFloat(el.getAttribute('data-target') || '0');
-          const isFloat = String(target).includes('.');
-          let current = 0;
-          const step = target / 40;
-          const timer = setInterval(() => {
-            current += step;
-            if (current >= target) {
-              el.textContent = isFloat ? target.toFixed(1) : Math.round(target);
-              clearInterval(timer);
-            } else {
-              el.textContent = isFloat ? current.toFixed(1) : Math.round(current);
-            }
-          }, 25);
-          observer.unobserve(el);
-        }
-      });
-    }, { threshold: 0.3 });
-
-    metricCards.forEach(mc => observer.observe(mc));
-  }
-
-  // 4. Initialize Subsystems
+  // 4. Initialize Interactive Subsystems
   initCanvasViewer();
-  initCapabilities();
   initComparisonSlider();
   initRFQCalculator();
 });
