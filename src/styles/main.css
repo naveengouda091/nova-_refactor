@@ -597,29 +597,29 @@ button:active, .btn:active { transform: scale(0.975); }
   width: 100%;
   max-width: 520px;
   margin: 0 auto;
-  padding: 18px 12px;
+  padding: 34px 16px 28px;
   overflow: visible;
 }
 
 /* Floating Badges with Unclipped Safe Coordinates */
 .badge-mandapa-tl {
   position: absolute;
-  top: 4px;
-  left: -8px;
+  top: -8px;
+  left: 20px;
   z-index: 25;
   animation: float-gentle 4s ease-in-out infinite alternate;
 }
 .badge-mandapa-mr {
   position: absolute;
-  top: 45%;
-  right: -14px;
+  top: 40%;
+  right: -18px;
   z-index: 25;
   animation: float-gentle 5s ease-in-out infinite 0.5s alternate;
 }
 .badge-mandapa-bl {
   position: absolute;
-  bottom: 4px;
-  left: 12px;
+  bottom: 150px;
+  left: -14px;
   z-index: 25;
   animation: float-gentle 4.5s ease-in-out infinite 1s alternate;
 }
@@ -652,7 +652,7 @@ button:active, .btn:active { transform: scale(0.975); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 16px;
+  padding: 12px 18px;
   border-bottom: 1px solid var(--border-line);
   background: var(--bg-secondary);
   font-size: 0.725rem;
@@ -674,8 +674,8 @@ button:active, .btn:active { transform: scale(0.975); }
 .pillar-canvas-container {
   position: relative;
   width: 100%;
-  height: 380px;
-  background: var(--bg-card);
+  height: 400px;
+  background: #090D16;
   overflow: hidden;
 }
 #mandapa-pillar-canvas {
@@ -690,18 +690,18 @@ button:active, .btn:active { transform: scale(0.975); }
 }
 .canvas-drag-hint {
   position: absolute;
-  bottom: 10px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.625rem;
   letter-spacing: 0.08em;
-  color: var(--text-muted);
-  background: var(--bg-card);
-  padding: 3px 10px;
+  color: #94A3B8;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 4px 12px;
   border-radius: var(--radius-pill);
-  border: 1px solid var(--border-line);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   pointer-events: none;
-  opacity: 0.8;
+  backdrop-filter: blur(6px);
   white-space: nowrap;
 }
 

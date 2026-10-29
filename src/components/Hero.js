@@ -43,7 +43,7 @@ export function Hero() {
           <div class="hero-visual-col">
             <div class="hero-collage-wrap pillar-viewport-wrap">
               
-              <!-- 3 Floating Glassmorphic Telemetry Badges (90% White with subtle drop shadow) -->
+              <!-- 3 Floating Glassmorphic Telemetry Badges (Tastefully offset without obscuring header/footer) -->
               <div class="floating-badge badge-mandapa-tl glass-badge" aria-label="Tolerance metric">
                 <span class="status-dot dot-green" aria-hidden="true"></span>
                 <span class="mono text-xs font-bold">TLS + UAV &bull; 0.5mm Tol</span>
@@ -76,8 +76,8 @@ export function Hero() {
 
                 <!-- 3D Pillar Canvas Viewport -->
                 <div class="pillar-canvas-container">
-                  <canvas id="mandapa-pillar-canvas" width="480" height="360" aria-label="3D CAD viewport showing Ornate Indian Heritage Temple Pillar sliced into LiDAR point cloud, photogrammetry wireframe, and parametric BIM CAD"></canvas>
-                  <div class="canvas-drag-hint mono" aria-hidden="true">DRAG TO ORBIT 3D MODEL</div>
+                  <canvas id="mandapa-pillar-canvas" width="500" height="400" aria-label="3D CAD viewport showing Ornate Indian Heritage Temple Pillar sliced into LiDAR point cloud, photogrammetry wireframe, and parametric BIM CAD"></canvas>
+                  <div class="canvas-drag-hint mono" aria-hidden="true">&bull; DRAG TO ORBIT 3D VIEWPORT &bull;</div>
                 </div>
 
                 <!-- Bottom Footer Bar -->
@@ -117,7 +117,7 @@ export function initHeroFlangeCanvas() {
   let width = 0;
   let height = 0;
   let dpr = 1;
-  let yaw = 0.52;
+  let yaw = 0.58;
   let pitch = 0.28;
   let isDragging = false;
   let lastX = 0;
@@ -126,49 +126,92 @@ export function initHeroFlangeCanvas() {
   let activeLayer = 'all'; // 'all' | 'cloud' | 'wire' | 'bim'
   let laserPulse = 0;
 
-  // Geometry Definition for Ornate Indian Mandapa Pillar
-  // Y ranges from -1.35 (plinth ground) to +1.35 (carved bracket capital)
-  // Section 1: Top (Point Cloud) -> Y > 0.40
-  // Section 2: Middle (Photogrammetry Wireframe) -> -0.45 <= Y <= 0.40
-  // Section 3: Bottom (Parametric BIM Solid) -> Y < -0.45
+  // =========================================================================
+  // ARCHITECTURAL MODEL: ORNATE INDIAN HERITAGE TEMPLE PILLAR (MANDAPA STAMBHA)
+  // Coordinates: Y ranges from -1.25 (ground plinth) to +1.25 (corbel bracket tip)
+  // Layer Slices:
+  //   1. TOP (LiDAR Point Cloud): Y > 0.35 (Capital, Potika brackets, Padma lotus, Tadi disc)
+  //   2. MIDDLE (Photogrammetry Wireframe): -0.42 <= Y <= 0.35 (Faceted fluted column, garland band)
+  //   3. BOTTOM (Parametric BIM Solid): Y < -0.42 (Stepped Upapitha, cyma moldings, square base)
+  // =========================================================================
 
+  // 1. TOP LAYER: DENSE LIDAR POINT CLOUD (Authentic Mandapa Capital: Kumbha, Tadi, Padma, Pushpapotika)
   const cloudPoints = [];
-  // 1. Generate dense LiDAR point cloud for the ornate capital brackets
-  const capitalLevels = 22;
-  for (let cl = 0; cl < capitalLevels; cl++) {
-    const v = cl / capitalLevels;
-    const y = 0.42 + v * 0.92;
-    // Flared corbel curves with stepped roll moldings
-    let r = 0.35 + Math.sin(v * Math.PI) * 0.28;
-    if (v > 0.65) r += (v - 0.65) * 0.45; // extended bracket arm
+  const capitalLayers = 36;
 
-    const ptsCount = 28 + Math.floor(v * 16);
+  for (let cl = 0; cl <= capitalLayers; cl++) {
+    const v = cl / capitalLayers; // 0.0 to 1.0
+    const y = 0.36 + v * 0.88;
+
+    let rBase = 0.28;
+    // Pot-shaped Kumbha bulb (v: 0.0 -> 0.30)
+    if (v < 0.30) {
+      const kv = v / 0.30;
+      rBase = 0.28 + Math.sin(kv * Math.PI) * 0.08;
+    }
+    // Disc-shaped Tadi plate (v: 0.30 -> 0.44)
+    else if (v < 0.44) {
+      const tv = (v - 0.30) / 0.14;
+      rBase = 0.30 + Math.sin(tv * Math.PI) * 0.09;
+    }
+    // Flaring Lotus Padma (v: 0.44 -> 0.65)
+    else if (v < 0.65) {
+      const pv = (v - 0.44) / 0.21;
+      rBase = 0.31 + pv * 0.08;
+    }
+    // 4-Way Corbel Brackets (Pushpapotika roll arms) (v: 0.65 -> 0.92)
+    else if (v < 0.92) {
+      const bv = (v - 0.65) / 0.27;
+      rBase = 0.36 + Math.sin(bv * Math.PI) * 0.05;
+    }
+    // Abacus Capital Beam Cap (v: 0.92 -> 1.0)
+    else {
+      rBase = 0.38;
+    }
+
+    const ptsCount = 38 + Math.floor(v * 20);
     for (let p = 0; p < ptsCount; p++) {
       const angle = (p / ptsCount) * Math.PI * 2;
-      // 4-corner bracket emphasis (Mandapa roll corbel)
-      const bracketExt = 0.12 * Math.cos(4 * angle);
-      const rad = r + bracketExt + (Math.random() - 0.5) * 0.04;
+      
+      // Distinct 4-way architectural corbel lobes along cardinal axes
+      let bracketExt = 0;
+      if (v >= 0.65 && v < 0.92) {
+        // Projecting 4-way arms
+        const armFactor = Math.pow(Math.cos(2 * angle), 4);
+        bracketExt = 0.14 * armFactor;
+      } else if (v >= 0.92) {
+        // Square abacus cap
+        bracketExt = 0.04 * Math.cos(4 * angle);
+      } else if (v < 0.30) {
+        // Fluted neck
+        bracketExt = 0.015 * Math.cos(8 * angle);
+      }
+
+      const rad = rBase + bracketExt + (Math.random() - 0.5) * 0.02;
       const x = Math.cos(angle) * rad;
       const z = Math.sin(angle) * rad;
       cloudPoints.push({ x, y, z, elevationRatio: v });
     }
   }
 
-  // 2. Middle Wireframe Shaft (16-faceted column with center ornamental band)
-  const wireRings = 10;
+  // 2. MIDDLE LAYER: HIGH-DENSITY PHOTOGRAMMETRY WIREFRAME SHAFT
+  const wireRings = 14;
   const wireSectors = 16;
   const wireVerts = [];
   const wireFaces = [];
 
   for (let r = 0; r <= wireRings; r++) {
     const v = r / wireRings;
-    const y = -0.44 + v * 0.84;
-    // Central ornamental band at mid-shaft
-    const bandBump = Math.exp(-((v - 0.5) ** 2) / 0.02) * 0.08;
-    const rad = 0.32 + bandBump;
+    const y = -0.42 + v * 0.76;
+
+    // Central ornamental band (Padmabandha / floral garland at mid-shaft)
+    const bandBulge = Math.exp(-((v - 0.5) ** 2) / 0.015) * 0.09;
+    const neckTaper = v > 0.85 ? -((v - 0.85) / 0.15) * 0.05 : 0;
+    const rad = 0.28 + bandBulge + neckTaper;
 
     for (let s = 0; s < wireSectors; s++) {
       const angle = (s / wireSectors) * Math.PI * 2;
+      // 16-faceted polygonal column geometry
       wireVerts.push({
         x: Math.cos(angle) * rad,
         y: y,
@@ -183,26 +226,29 @@ export function initHeroFlangeCanvas() {
       const i1 = r * wireSectors + ((s + 1) % wireSectors);
       const i2 = (r + 1) * wireSectors + ((s + 1) % wireSectors);
       const i3 = (r + 1) * wireSectors + s;
-      // Triangulated photogrammetry mesh
+      // Triangulated photogrammetry faces
       wireFaces.push([i0, i1, i2]);
       wireFaces.push([i0, i2, i3]);
     }
   }
 
-  // 3. Bottom Parametric BIM Solid Geometry (Plinth, moldings, and pedestal)
-  // Stepped square plinth base
-  const plinthBlocks = [
-    { y0: -1.35, y1: -1.15, size: 0.58 }, // Ground Upapitha
-    { y0: -1.15, y1: -0.95, size: 0.50 }, // Lotus molding base
-    { y0: -0.95, y1: -0.75, size: 0.44 }, // Upper pedestal
-    { y0: -0.75, y1: -0.46, size: 0.38 }  // Transition square block
+  // 3. BOTTOM LAYER: PARAMETRIC BIM SOLID BASE (Stepped Plinth, moldings, chamfers)
+  const bimBoxes = [
+    // Ground Upapitha foundation plinth
+    { y0: -1.25, y1: -1.08, w: 0.74, d: 0.74 },
+    // Adhisthana stepped molding base
+    { y0: -1.08, y1: -0.92, w: 0.64, d: 0.64 },
+    // Lotus pedestal block (Jangha)
+    { y0: -0.92, y1: -0.74, w: 0.54, d: 0.54 },
+    // Transition collar to octagonal shaft
+    { y0: -0.74, y1: -0.44, w: 0.44, d: 0.44 }
   ];
 
   function resize() {
     const rect = canvas.getBoundingClientRect();
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = canvas.width = rect.width * dpr;
-    height = canvas.height = (rect.height || 360) * dpr;
+    height = canvas.height = (rect.height || 380) * dpr;
   }
 
   function project(x, y, z) {
@@ -216,7 +262,7 @@ export function initHeroFlangeCanvas() {
     const y2 = y * cp - z1 * sp;
     const z2 = y * sp + z1 * cp;
 
-    const scale = Math.min(width, height) * 0.31;
+    const scale = Math.min(width, height) * 0.32;
     const fov = 3.6 / (3.6 + z2);
 
     return {
@@ -227,179 +273,173 @@ export function initHeroFlangeCanvas() {
     };
   }
 
-  // Color lookup for Top Thermal LiDAR point cloud
-  function getThermalLiDARColor(t, isDark) {
-    // Gradient: #2563EB (Blue) -> #7C3AED (Purple) -> #DB2777 (Pink) -> #EA580C (Orange)
-    if (t < 0.33) {
-      return '#2563EB'; // Blue
-    } else if (t < 0.66) {
-      return '#7C3AED'; // Purple
-    } else if (t < 0.85) {
-      return '#DB2777'; // Pink
+  // Thermal elevation gradient: Blue -> Purple -> Pink -> Warm Orange
+  function getThermalLiDARColor(t) {
+    if (t < 0.28) {
+      return '#2563EB'; // Laser Blue
+    } else if (t < 0.58) {
+      return '#7C3AED'; // Royal Purple
+    } else if (t < 0.82) {
+      return '#DB2777'; // Precision Pink
     } else {
-      return '#EA580C'; // Warm Orange
+      return '#EA580C'; // Metrology Orange
     }
   }
 
   function render() {
     ctx.clearRect(0, 0, width, height);
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
     const s = dpr;
+    laserPulse += 0.038;
 
-    laserPulse += 0.035;
+    // Viewport background: Deep Technical CAD Slate (#090D16) for authentic reality capture contrast
+    ctx.fillStyle = '#090D16';
+    ctx.fillRect(0, 0, width, height);
 
-    // A. 3D Coordinate Ground Grid Plane (Y = -1.35)
+    // Subtle isometric coordinate ground grid at Y = -1.25
     ctx.lineWidth = 1 * s;
-    ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.06)' : 'rgba(0, 0, 0, 0.05)';
-    for (let gx = -0.9; gx <= 0.9; gx += 0.22) {
-      const p0 = project(gx, -1.35, -0.9);
-      const p1 = project(gx, -1.35, 0.9);
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)';
+    for (let gx = -1.0; gx <= 1.0; gx += 0.25) {
+      const p0 = project(gx, -1.25, -1.0);
+      const p1 = project(gx, -1.25, 1.0);
       ctx.beginPath();
       ctx.moveTo(p0.px, p0.py);
       ctx.lineTo(p1.px, p1.py);
       ctx.stroke();
 
-      const p2 = project(-0.9, -1.35, gx);
-      const p3 = project(0.9, -1.35, gx);
+      const p2 = project(-1.0, -1.25, gx);
+      const p3 = project(1.0, -1.25, gx);
       ctx.beginPath();
       ctx.moveTo(p2.px, p2.py);
       ctx.lineTo(p3.px, p3.py);
       ctx.stroke();
     }
 
-    // B. Thin 1px Dashed Bounding Box around Pillar
-    ctx.strokeStyle = isDark ? 'rgba(56, 189, 248, 0.25)' : 'rgba(2, 132, 199, 0.22)';
-    ctx.setLineDash([3 * s, 4 * s]);
-    const bSize = 0.68;
-    const bY0 = -1.35;
-    const bY1 = 1.35;
+    // 1px Dashed Engineering Bounding Box around model
+    ctx.strokeStyle = 'rgba(56, 189, 248, 0.35)';
+    ctx.setLineDash([4 * s, 4 * s]);
+    const bW = 0.52;
+    const bY0 = -1.25;
+    const bY1 = 1.25;
 
-    const b0 = project(-bSize, bY0, -bSize);
-    const b1 = project(bSize, bY0, -bSize);
-    const b2 = project(bSize, bY0, bSize);
-    const b3 = project(-bSize, bY0, bSize);
+    const b0 = project(-bW, bY0, -bW);
+    const b1 = project(bW, bY0, -bW);
+    const b2 = project(bW, bY0, bW);
+    const b3 = project(-bW, bY0, bW);
 
-    const t0 = project(-bSize, bY1, -bSize);
-    const t1 = project(bSize, bY1, -bSize);
-    const t2 = project(bSize, bY1, bSize);
-    const t3 = project(-bSize, bY1, bSize);
+    const t0 = project(-bW, bY1, -bW);
+    const t1 = project(bW, bY1, -bW);
+    const t2 = project(bW, bY1, bW);
+    const t3 = project(-bW, bY1, bW);
 
     ctx.beginPath();
-    // bottom ring
     ctx.moveTo(b0.px, b0.py); ctx.lineTo(b1.px, b1.py); ctx.lineTo(b2.px, b2.py); ctx.lineTo(b3.px, b3.py); ctx.closePath();
-    // top ring
     ctx.moveTo(t0.px, t0.py); ctx.lineTo(t1.px, t1.py); ctx.lineTo(t2.px, t2.py); ctx.lineTo(t3.px, t3.py); ctx.closePath();
-    // upright columns
     ctx.moveTo(b0.px, b0.py); ctx.lineTo(t0.px, t0.py);
     ctx.moveTo(b1.px, b1.py); ctx.lineTo(t1.px, t1.py);
     ctx.moveTo(b2.px, b2.py); ctx.lineTo(t2.px, t2.py);
     ctx.moveTo(b3.px, b3.py); ctx.lineTo(t3.px, t3.py);
     ctx.stroke();
-    ctx.setLineDash([]); // Reset line dash
+    ctx.setLineDash([]);
 
-    // C. X/Y/Z Axis Gizmo at Bottom-Left Ground Origin
-    const gOrigin = project(-0.75, -1.35, -0.75);
-    const gX = project(-0.55, -1.35, -0.75);
-    const gY = project(-0.75, -1.15, -0.75);
-    const gZ = project(-0.75, -1.35, -0.55);
+    // X/Y/Z Coordinate Axis Gizmo at Ground Origin
+    const gOrigin = project(-0.75, -1.25, -0.75);
+    const gX = project(-0.52, -1.25, -0.75);
+    const gY = project(-0.75, -1.02, -0.75);
+    const gZ = project(-0.75, -1.25, -0.52);
 
     ctx.lineWidth = 1.8 * s;
-    // X Axis (Red/Coral)
+    // X (Red)
     ctx.strokeStyle = '#EF4444';
     ctx.beginPath(); ctx.moveTo(gOrigin.px, gOrigin.py); ctx.lineTo(gX.px, gX.py); ctx.stroke();
-    // Y Axis (Green/Emerald)
+    // Y (Green)
     ctx.strokeStyle = '#10B981';
     ctx.beginPath(); ctx.moveTo(gOrigin.px, gOrigin.py); ctx.lineTo(gY.px, gY.py); ctx.stroke();
-    // Z Axis (Blue/Laser)
-    ctx.strokeStyle = '#0284C7';
+    // Z (Cyan)
+    ctx.strokeStyle = '#00D2FF';
     ctx.beginPath(); ctx.moveTo(gOrigin.px, gOrigin.py); ctx.lineTo(gZ.px, gZ.py); ctx.stroke();
 
-    ctx.fillStyle = isDark ? '#9CA3AF' : '#4B5563';
-    ctx.font = `600 ${8 * s}px "Sora", sans-serif`;
-    ctx.fillText('X', gX.px + 2, gX.py);
-    ctx.fillText('Y', gY.px, gY.py - 2);
-    ctx.fillText('Z', gZ.px + 2, gZ.py);
+    ctx.fillStyle = '#94A3B8';
+    ctx.font = `600 ${8.5 * s}px "Sora", sans-serif`;
+    ctx.fillText('X', gX.px + 3, gX.py);
+    ctx.fillText('Y', gY.px - 2, gY.py - 4);
+    ctx.fillText('Z', gZ.px + 3, gZ.py);
 
-    // =====================================================================
-    // LAYER 3 (BOTTOM): Parametric BIM Solid Geometry
-    // =====================================================================
+    // =========================================================================
+    // LAYER 3 (BOTTOM): Parametric BIM Solid Architectural Geometry
+    // =========================================================================
     if (activeLayer === 'all' || activeLayer === 'bim') {
-      plinthBlocks.forEach((block, bIdx) => {
-        const hs = block.size;
-        const c0 = project(-hs, block.y0, -hs);
-        const c1 = project(hs, block.y0, -hs);
-        const c2 = project(hs, block.y0, hs);
-        const c3 = project(-hs, block.y0, hs);
+      bimBoxes.forEach((box) => {
+        const hw = box.w / 2;
+        const hd = box.d / 2;
 
-        const u0 = project(-hs, block.y1, -hs);
-        const u1 = project(hs, block.y1, -hs);
-        const u2 = project(hs, block.y1, hs);
-        const u3 = project(-hs, block.y1, hs);
+        const c0 = project(-hw, box.y0, -hd);
+        const c1 = project(hw, box.y0, -hd);
+        const c2 = project(hw, box.y0, hd);
+        const c3 = project(-hw, box.y0, hd);
 
-        // Filled shaded solid faces (BIM clay shading)
-        const fillSolid = isDark ? 'rgba(30, 41, 59, 0.85)' : 'rgba(255, 255, 255, 0.95)';
-        const fillSide = isDark ? 'rgba(15, 23, 42, 0.9)' : 'rgba(241, 245, 249, 0.9)';
+        const u0 = project(-hw, box.y1, -hd);
+        const u1 = project(hw, box.y1, -hd);
+        const u2 = project(hw, box.y1, hd);
+        const u3 = project(-hw, box.y1, hd);
 
-        // Top face
-        ctx.fillStyle = fillSolid;
+        // Top face (bright light)
+        ctx.fillStyle = 'rgba(241, 245, 249, 0.95)';
         ctx.beginPath();
         ctx.moveTo(u0.px, u0.py); ctx.lineTo(u1.px, u1.py); ctx.lineTo(u2.px, u2.py); ctx.lineTo(u3.px, u3.py);
         ctx.closePath();
         ctx.fill();
+        ctx.strokeStyle = '#0F172A';
+        ctx.lineWidth = 1.2 * s;
+        ctx.stroke();
 
-        // Front faces
-        ctx.fillStyle = fillSide;
+        // Front right face
+        ctx.fillStyle = 'rgba(203, 213, 225, 0.92)';
         ctx.beginPath();
         ctx.moveTo(c1.px, c1.py); ctx.lineTo(c2.px, c2.py); ctx.lineTo(u2.px, u2.py); ctx.lineTo(u1.px, u1.py);
         ctx.closePath();
         ctx.fill();
+        ctx.strokeStyle = '#0F172A';
+        ctx.stroke();
 
+        // Front left face
+        ctx.fillStyle = 'rgba(148, 163, 184, 0.92)';
         ctx.beginPath();
         ctx.moveTo(c2.px, c2.py); ctx.lineTo(c3.px, c3.py); ctx.lineTo(u3.px, u3.py); ctx.lineTo(u2.px, u2.py);
         ctx.closePath();
         ctx.fill();
-
-        // Sharp CAD Orthographic Elevation Edges
-        ctx.strokeStyle = isDark ? '#E2E8F0' : '#111827';
-        ctx.lineWidth = 1.6 * s;
-        ctx.stroke();
-
-        // Internal molding bevel line
-        ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.18)';
-        ctx.lineWidth = 1 * s;
-        ctx.beginPath();
-        const m0 = project(-hs * 0.9, block.y0 + (block.y1 - block.y0) * 0.5, hs);
-        const m1 = project(hs * 0.9, block.y0 + (block.y1 - block.y0) * 0.5, hs);
-        ctx.moveTo(m0.px, m0.py); ctx.lineTo(m1.px, m1.py);
+        ctx.strokeStyle = '#0F172A';
         ctx.stroke();
       });
 
-      // Dimension extension lines and ticks for BIM Bottom
-      const dimX = -0.72;
-      const dP0 = project(dimX, -1.35, 0);
-      const dP1 = project(dimX, -0.46, 0);
+      // Orthographic Dimension Leader & Ticks
+      const dimX = -0.50;
+      const dP0 = project(dimX, -1.25, 0);
+      const dP1 = project(dimX, -0.44, 0);
 
-      ctx.strokeStyle = '#0284C7';
+      ctx.strokeStyle = '#00D2FF';
       ctx.lineWidth = 1.2 * s;
       ctx.beginPath();
-      ctx.moveTo(dP0.px - 6 * s, dP0.py); ctx.lineTo(dP0.px + 6 * s, dP0.py);
-      ctx.moveTo(dP1.px - 6 * s, dP1.py); ctx.lineTo(dP1.px + 6 * s, dP1.py);
+      ctx.moveTo(dP0.px - 4 * s, dP0.py); ctx.lineTo(dP0.px + 4 * s, dP0.py);
+      ctx.moveTo(dP1.px - 4 * s, dP1.py); ctx.lineTo(dP1.px + 4 * s, dP1.py);
       ctx.moveTo(dP0.px, dP0.py); ctx.lineTo(dP1.px, dP1.py);
       ctx.stroke();
 
-      ctx.fillStyle = '#0284C7';
-      ctx.font = `600 ${8.5 * s}px "Sora", sans-serif`;
-      ctx.fillText('H = 1200mm', dP0.px - 44 * s, (dP0.py + dP1.py) / 2);
+      ctx.fillStyle = '#00D2FF';
+      ctx.font = `600 ${8 * s}px "Sora", sans-serif`;
+      ctx.fillText('H = 810mm', dP0.px - 48 * s, (dP0.py + dP1.py) / 2);
     }
 
-    // =====================================================================
-    // SEPARATOR 2 (LOWER GLOWING LASER SCAN LINE at Y = -0.45)
-    // =====================================================================
+    // =========================================================================
+    // SEPARATOR 2: GLOWING EMERALD LASER SCAN PLANE at Y = -0.42
+    // =========================================================================
     if (activeLayer === 'all') {
-      const sepY2 = -0.45;
-      const sr = 0.42;
+      const sepY2 = -0.42;
+      const sr = 0.38;
+      const laserWidth = (2.2 + Math.sin(laserPulse) * 0.8) * s;
       ctx.strokeStyle = '#10B981';
-      ctx.lineWidth = (2 + Math.sin(laserPulse) * 0.6) * s;
+      ctx.lineWidth = laserWidth;
+      ctx.shadowBlur = 8 * s;
+      ctx.shadowColor = '#10B981';
       ctx.beginPath();
       for (let a = 0; a <= Math.PI * 2; a += 0.2) {
         const pt = project(Math.cos(a) * sr, sepY2, Math.sin(a) * sr);
@@ -408,18 +448,18 @@ export function initHeroFlangeCanvas() {
       }
       ctx.closePath();
       ctx.stroke();
+      ctx.shadowBlur = 0;
     }
 
-    // =====================================================================
-    // LAYER 2 (MIDDLE): Photogrammetry Wireframe Mesh
-    // =====================================================================
+    // =========================================================================
+    // LAYER 2 (MIDDLE): Photogrammetry Wireframe Mesh (Triangulated Shaft)
+    // =========================================================================
     if (activeLayer === 'all' || activeLayer === 'wire') {
-      // Shaded matte white clay fill with crisp charcoal wireframe lines
       const projWire = wireVerts.map(v => project(v.x, v.y, v.z));
 
-      // Draw triangulated mesh
-      ctx.fillStyle = isDark ? 'rgba(30, 41, 59, 0.75)' : 'rgba(255, 255, 255, 0.92)';
-      ctx.strokeStyle = isDark ? '#E2E8F0' : '#111111'; // Crisp charcoal wireframe
+      // Shaded matte white clay fill with crisp charcoal wireframe lines
+      ctx.fillStyle = 'rgba(248, 250, 252, 0.92)';
+      ctx.strokeStyle = '#0F172A'; // Crisp charcoal wire lines
       ctx.lineWidth = 1 * s;
 
       wireFaces.forEach(f => {
@@ -437,14 +477,17 @@ export function initHeroFlangeCanvas() {
       });
     }
 
-    // =====================================================================
-    // SEPARATOR 1 (UPPER GLOWING LASER SCAN LINE at Y = 0.40)
-    // =====================================================================
+    // =========================================================================
+    // SEPARATOR 1: GLOWING CYAN LASER SCAN PLANE at Y = 0.36
+    // =========================================================================
     if (activeLayer === 'all') {
-      const sepY1 = 0.40;
-      const sr1 = 0.46;
+      const sepY1 = 0.36;
+      const sr1 = 0.42;
+      const laserWidth1 = (2.5 + Math.cos(laserPulse) * 0.8) * s;
       ctx.strokeStyle = '#00D2FF';
-      ctx.lineWidth = (2.4 + Math.cos(laserPulse) * 0.8) * s;
+      ctx.lineWidth = laserWidth1;
+      ctx.shadowBlur = 10 * s;
+      ctx.shadowColor = '#00D2FF';
       ctx.beginPath();
       for (let a = 0; a <= Math.PI * 2; a += 0.2) {
         const pt = project(Math.cos(a) * sr1, sepY1, Math.sin(a) * sr1);
@@ -453,11 +496,12 @@ export function initHeroFlangeCanvas() {
       }
       ctx.closePath();
       ctx.stroke();
+      ctx.shadowBlur = 0;
     }
 
-    // =====================================================================
-    // LAYER 1 (TOP): Raw LiDAR Point Cloud in Thermal Elevation Gradient
-    // =====================================================================
+    // =========================================================================
+    // LAYER 1 (TOP): Dense Thermal LiDAR Point Cloud (Corbels, Padma, Kumbha)
+    // =========================================================================
     if (activeLayer === 'all' || activeLayer === 'cloud') {
       const projCloud = cloudPoints.map(p => {
         const pr = project(p.x, p.y, p.z);
@@ -465,8 +509,8 @@ export function initHeroFlangeCanvas() {
       }).sort((a, b) => b.depth - a.depth);
 
       projCloud.forEach(p => {
-        const col = getThermalLiDARColor(p.elevationRatio, isDark);
-        const ptSize = Math.max(1.4, 2.4 * p.scale * s);
+        const col = getThermalLiDARColor(p.elevationRatio);
+        const ptSize = Math.max(1.5, 2.6 * p.scale * s);
 
         ctx.fillStyle = col;
         ctx.beginPath();
@@ -475,15 +519,15 @@ export function initHeroFlangeCanvas() {
       });
     }
 
-    // Subtle Auto Orbit
+    // Smooth auto-orbit rotation
     if (autoRotate && !isDragging && !RM) {
-      yaw += 0.004;
+      yaw += 0.005;
     }
 
     requestAnimationFrame(render);
   }
 
-  // Pointer Drag & Orbit Controls
+  // Pointer drag controls
   canvas.addEventListener('pointerdown', (e) => {
     isDragging = true;
     lastX = e.clientX;
