@@ -881,10 +881,10 @@ button:active, .btn:active { transform: scale(0.975); }
   position: relative;
   background: #090C12;
   border: 1px solid var(--border-line);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: var(--shadow-md);
-  height: 540px;
+  box-shadow: var(--shadow-float);
+  height: 640px;
 }
 .canvas-overlay-top {
   position: absolute;
@@ -1276,6 +1276,7 @@ button:active, .btn:active { transform: scale(0.975); }
   .rfq-grid { grid-template-columns: 1fr; }
   .footer-top-grid { grid-template-columns: repeat(2, 1fr); }
   .trust-strip-inner { flex-direction: column; align-items: flex-start; }
+  .canvas-card { height: 520px; }
 }
 
 @media (max-width: 768px) {
@@ -1285,7 +1286,7 @@ button:active, .btn:active { transform: scale(0.975); }
   .workflow-strip-grid { grid-template-columns: 1fr; }
   .contact-inputs-grid, .priority-radio-grid { grid-template-columns: 1fr; }
   .footer-top-grid { grid-template-columns: 1fr; }
-  .canvas-card { height: 420px; }
+  .canvas-card { height: 440px; }
   .slider-container { height: 320px; }
   .quick-consult-widget { bottom: 16px; right: 16px; }
   .consult-sub { display: none; }

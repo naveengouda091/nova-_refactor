@@ -145,7 +145,7 @@ export function initCanvasViewer() {
     const y2 = y * cp - z1 * sp;
     const z2 = y * sp + z1 * cp;
 
-    const scale = Math.min(width, height) * 0.44;
+    const scale = Math.min(width, height) * 0.32;
     const fov = 3.2 / (3.2 + z2);
 
     return {
@@ -238,7 +238,7 @@ export function initCanvasViewer() {
       }
     } else if (currentMode === 'heatmap') {
       projectedPoints.forEach(p => {
-        const radiusPt = Math.max(2.0, 4.2 * p.scale * dpr);
+        const radiusPt = Math.max(1.6, 3.2 * p.scale * dpr);
         ctx.fillStyle = getMetrologyColor(p.dev, 0.88);
         ctx.beginPath();
         ctx.arc(p.px, p.py, radiusPt, 0, Math.PI * 2);
@@ -248,7 +248,7 @@ export function initCanvasViewer() {
       projectedPoints.forEach(p => {
         const isNearLaser = Math.abs(p.y - laserScanY) < 0.12;
         const color = isNearLaser ? '#FFFFFF' : 'rgba(6, 182, 212, 0.7)';
-        const radiusPt = isNearLaser ? 4.5 * dpr : 2.4 * dpr;
+        const radiusPt = isNearLaser ? 3.6 * dpr : 1.8 * dpr;
 
         ctx.fillStyle = color;
         ctx.beginPath();
