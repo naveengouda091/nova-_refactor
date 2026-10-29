@@ -4,7 +4,7 @@ export function Header() {
       <nav class="main-nav" aria-label="Main Navigation">
         <div class="container nav-container">
           
-          <!-- Brand Logo -->
+          <!-- Brand Logo (flex-shrink-0 and explicit separation) -->
           <a href="#" class="brand-logo" aria-label="NovaScan 3D Home">
             <svg class="brand-mark" width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
               <rect x="2" y="2" width="28" height="28" rx="6" stroke="var(--border-line)" stroke-width="1.5"/>
@@ -18,19 +18,19 @@ export function Header() {
             </div>
           </a>
 
-          <!-- Desktop Navigation -->
+          <!-- Desktop Navigation (Strictly single-row & whitespace-nowrap) -->
           <div class="nav-links hide-tablet" role="menubar">
-            <a href="#interactive-showcase" class="nav-link gradient-hover-link" role="menuitem">3D Inspector</a>
-            <a href="#capabilities" class="nav-link gradient-hover-link" role="menuitem">Capabilities</a>
-            <a href="#comparison" class="nav-link gradient-hover-link" role="menuitem">Scan vs CAD</a>
-            <a href="#workflow" class="nav-link gradient-hover-link" role="menuitem">Workflow</a>
-            <a href="#rfq-calculator" class="nav-link gradient-hover-link" role="menuitem">Instant Quote</a>
+            <a href="#interactive-showcase" class="nav-link gradient-hover-link whitespace-nowrap" role="menuitem">3D Inspector</a>
+            <a href="#capabilities" class="nav-link gradient-hover-link whitespace-nowrap" role="menuitem">Capabilities</a>
+            <a href="#comparison" class="nav-link gradient-hover-link whitespace-nowrap" role="menuitem">Scan vs CAD</a>
+            <a href="#workflow" class="nav-link gradient-hover-link whitespace-nowrap" role="menuitem">Workflow</a>
+            <a href="#rfq-calculator" class="nav-link gradient-hover-link whitespace-nowrap" role="menuitem">Instant Quote</a>
           </div>
 
-          <!-- Actions -->
+          <!-- Actions Group -->
           <div class="nav-actions">
-            <!-- Lab Status Pill -->
-            <div class="floating-badge hide-mobile">
+            <!-- Lab Status Pill (Hides gracefully on compact laptop viewports to preserve single-line layout) -->
+            <div class="floating-badge hide-below-1280 whitespace-nowrap">
               <span class="status-dot dot-green" aria-hidden="true"></span>
               <span class="mono text-xs">Lab Active &bull; Mumbai HQ</span>
             </div>
@@ -53,8 +53,8 @@ export function Header() {
               </svg>
             </button>
 
-            <!-- RFQ Button -->
-            <a href="#rfq-calculator" class="btn btn-primary nav-cta">
+            <!-- RFQ Button (Strict single-line button) -->
+            <a href="#rfq-calculator" class="btn btn-primary nav-cta whitespace-nowrap">
               <span>Request Quote</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12"></line>

@@ -2,13 +2,14 @@ import './styles/main.css';
 
 import { TactileBackground, initTactileBackground } from './components/TactileBackground.js';
 import { Header } from './components/Header.js';
-import { Hero } from './components/Hero.js';
+import { Hero, initHeroFlangeCanvas } from './components/Hero.js';
 import { MetricsTicker } from './components/MetricsTicker.js';
 import { CanvasViewer, initCanvasViewer } from './components/CanvasViewer.js';
 import { Capabilities } from './components/Capabilities.js';
 import { ComparisonSlider, initComparisonSlider } from './components/ComparisonSlider.js';
 import { WorkflowStrip } from './components/WorkflowStrip.js';
 import { RFQCalculator, initRFQCalculator } from './components/RFQCalculator.js';
+import { QuickConsult } from './components/QuickConsult.js';
 import { Footer } from './components/Footer.js';
 
 // Mount Application Structure
@@ -20,6 +21,7 @@ if (app) {
     <main id="main-content">
       ${Hero()}
       ${MetricsTicker()}
+      <div id="3D-Inspector"></div>
       ${CanvasViewer()}
       ${Capabilities()}
       ${ComparisonSlider()}
@@ -28,6 +30,7 @@ if (app) {
       </div>
       ${RFQCalculator()}
     </main>
+    ${QuickConsult()}
     ${Footer()}
   `;
 }
@@ -36,7 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // 1. Tactile Proximity Canvas
   initTactileBackground();
 
-  // 2. Theme Management (Light mode default #FAFAFA / Dark mode)
+  // 2. 5-Stage Metrology Flange Canvas in Hero
+  initHeroFlangeCanvas();
+
+  // 3. Theme Management (Light mode default #FAFAFA / Dark mode)
   const themeToggle = document.getElementById('theme-toggle');
   const html = document.documentElement;
   const darkIcon = document.querySelector('.theme-icon-dark');
@@ -67,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // 3. Mobile Navigation Drawer
+  // 4. Mobile Navigation Drawer
   const mobileBtn = document.getElementById('mobile-menu-btn');
   const mobileDrawer = document.getElementById('mobile-drawer');
 
@@ -99,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 4. Initialize Interactive Subsystems
+  // 5. Initialize Interactive Subsystems
   initCanvasViewer();
   initComparisonSlider();
   initRFQCalculator();
