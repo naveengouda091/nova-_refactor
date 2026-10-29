@@ -18,14 +18,8 @@ export function Header() {
             </div>
           </a>
 
-          <!-- Right Actions: Status Badge, Theme Toggle & Quote CTA -->
+          <!-- Right Actions: Theme Toggle & Request Quote CTA -->
           <div class="nav-actions">
-            <!-- Lab Status Pill -->
-            <div class="floating-badge whitespace-nowrap">
-              <span class="status-dot dot-green" aria-hidden="true"></span>
-              <span class="mono text-xs">Lab Active &bull; Mumbai HQ</span>
-            </div>
-
             <!-- Theme Toggle -->
             <button id="theme-toggle" class="btn-ghost theme-btn" aria-label="Toggle visual theme (light / dark)" title="Toggle Theme">
               <svg class="theme-icon-dark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
