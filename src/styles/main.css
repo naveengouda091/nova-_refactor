@@ -604,22 +604,22 @@ button:active, .btn:active { transform: scale(0.975); }
 /* Floating Badges with Unclipped Safe Coordinates */
 .badge-mandapa-tl {
   position: absolute;
-  top: -8px;
-  left: 20px;
+  top: -12px;
+  right: 28px;
   z-index: 25;
   animation: float-gentle 4s ease-in-out infinite alternate;
 }
 .badge-mandapa-mr {
   position: absolute;
-  top: 40%;
-  right: -18px;
+  top: 42%;
+  right: -14px;
   z-index: 25;
   animation: float-gentle 5s ease-in-out infinite 0.5s alternate;
 }
 .badge-mandapa-bl {
   position: absolute;
-  bottom: 150px;
-  left: -14px;
+  bottom: -12px;
+  left: 24px;
   z-index: 25;
   animation: float-gentle 4.5s ease-in-out infinite 1s alternate;
 }
@@ -1132,6 +1132,9 @@ button:active, .btn:active { transform: scale(0.975); }
   width: 100%;
   background: var(--metrology-gradient);
   border-radius: var(--radius-pill);
+}
+.spectrum-bar.grayscale-spectrum {
+  background: linear-gradient(90deg, #334155 0%, #94A3B8 50%, #FFFFFF 100%);
 }
 .metrology-canvas {
   width: 100%;
