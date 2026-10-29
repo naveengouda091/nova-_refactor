@@ -46,7 +46,7 @@ export function Capabilities() {
             <p class="cap-desc">
               Capture active industrial facilities and architecture with sub-millimeter tripod LiDAR systems.
             </p>
-            <a href="#rfq-calculator" class="cap-action-link gradient-hover-link">
+            <a href="#site-footer" class="cap-action-link gradient-hover-link">
               <span>Configure TLS Scope</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -79,7 +79,7 @@ export function Capabilities() {
             <p class="cap-desc">
               Generate survey-grade topographic terrain elevation models and orthomosaics from calibrated drones.
             </p>
-            <a href="#rfq-calculator" class="cap-action-link gradient-hover-link">
+            <a href="#site-footer" class="cap-action-link gradient-hover-link">
               <span>Explore GIS Mapping</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -113,7 +113,7 @@ export function Capabilities() {
             <p class="cap-desc">
               Convert raw point clouds into intelligent, clash-free Revit models up to LOD 500.
             </p>
-            <a href="#rfq-calculator" class="cap-action-link gradient-hover-link">
+            <a href="#site-footer" class="cap-action-link gradient-hover-link">
               <span>View BIM Deliverables</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -145,7 +145,7 @@ export function Capabilities() {
             <p class="cap-desc">
               Reconstruct production-ready parametric solid CAD models with micron-level inspection validation.
             </p>
-            <a href="#rfq-calculator" class="cap-action-link gradient-hover-link">
+            <a href="#site-footer" class="cap-action-link gradient-hover-link">
               <span>Calculate CAD Quote</span>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12"></line>

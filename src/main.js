@@ -8,7 +8,6 @@ import { CanvasViewer, initCanvasViewer } from './components/CanvasViewer.js';
 import { Capabilities } from './components/Capabilities.js';
 import { ComparisonSlider, initComparisonSlider } from './components/ComparisonSlider.js';
 import { WorkflowStrip } from './components/WorkflowStrip.js';
-import { RFQCalculator, initRFQCalculator } from './components/RFQCalculator.js';
 import { QuickConsult } from './components/QuickConsult.js';
 import { Footer } from './components/Footer.js';
 
@@ -28,7 +27,6 @@ if (app) {
       <div id="workflow">
         ${WorkflowStrip()}
       </div>
-      ${RFQCalculator()}
     </main>
     ${QuickConsult()}
     ${Footer()}
@@ -108,5 +106,4 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. Initialize Interactive Subsystems
   initCanvasViewer();
   initComparisonSlider();
-  initRFQCalculator();
 });

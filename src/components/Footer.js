@@ -65,7 +65,7 @@ export function Footer() {
             <a href="#capabilities" class="text-muted gradient-hover-link">Capabilities</a>
             <a href="#comparison" class="text-muted gradient-hover-link">Accuracy Spec</a>
             <a href="#workflow" class="text-muted gradient-hover-link">Workflow</a>
-            <a href="#rfq-calculator" class="text-muted gradient-hover-link">RFQ Quote</a>
+            <a href="mailto:darshan@novascan3d.in" class="text-muted gradient-hover-link">Direct Contact</a>
           </div>
         </div>
 
