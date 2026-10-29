@@ -1,4 +1,37 @@
 export function WorkflowStrip() {
+  const steps = [
+    {
+      num: '01',
+      title: 'Field Capture',
+      desc: 'Terrestrial LiDAR and drone passes acquire raw physical geometries with millimeter precision.',
+      image: '/steps/step-1.png'
+    },
+    {
+      num: '02',
+      title: 'Point Registration',
+      desc: 'Billions of spatial coordinates are tied to survey-grade GNSS base datum without drift.',
+      image: '/steps/step-2.png'
+    },
+    {
+      num: '03',
+      title: 'Noise Extraction',
+      desc: 'Outlier filtering and multi-sensor fusion clean and decimate complex spatial datasets.',
+      image: '/steps/step-3.png'
+    },
+    {
+      num: '04',
+      title: 'CAD Reconstruction',
+      desc: 'Parametric surfaces and Revit BIM elements are engineered to LOD 200–500 specifications.',
+      image: '/steps/step-4.png'
+    },
+    {
+      num: '05',
+      title: 'Metrology Audit',
+      desc: 'Deliverables are verified against 3D deviation colormaps and GD&T quality tolerances.',
+      image: '/steps/step-5.png'
+    }
+  ];
+
   return `
     <section class="workflow-strip-section section" aria-labelledby="workflow-title">
       <div class="container">
@@ -17,47 +50,28 @@ export function WorkflowStrip() {
         </div>
 
         <div class="workflow-strip-grid">
-          
-          <div class="workflow-step-card bento-card">
-            <span class="step-number">01</span>
-            <h3 class="step-title">Field Capture</h3>
-            <p class="step-desc">
-              Terrestrial LiDAR and drone passes acquire raw physical geometries with millimeter precision.
-            </p>
-          </div>
+          ${steps.map(s => `
+            <article class="workflow-step-card bento-card" aria-label="Step ${s.num}: ${s.title}">
+              
+              <!-- Step Visual Card Preview -->
+              <div class="workflow-card-img-wrap">
+                <img 
+                  src="${s.image}" 
+                  alt="Visualization of Step ${s.num}: ${s.title}" 
+                  class="workflow-card-img" 
+                  loading="lazy"
+                />
+                <span class="workflow-card-tag mono">${s.num}</span>
+              </div>
 
-          <div class="workflow-step-card bento-card">
-            <span class="step-number">02</span>
-            <h3 class="step-title">Point Registration</h3>
-            <p class="step-desc">
-              Billions of spatial coordinates are tied to survey-grade GNSS base datum without drift.
-            </p>
-          </div>
+              <!-- Content Below Image -->
+              <div class="workflow-card-body">
+                <h3 class="step-title font-bold">${s.title}</h3>
+                <p class="step-desc">${s.desc}</p>
+              </div>
 
-          <div class="workflow-step-card bento-card">
-            <span class="step-number">03</span>
-            <h3 class="step-title">Noise Extraction</h3>
-            <p class="step-desc">
-              Outlier filtering and multi-sensor fusion clean and decimate complex spatial datasets.
-            </p>
-          </div>
-
-          <div class="workflow-step-card bento-card">
-            <span class="step-number">04</span>
-            <h3 class="step-title">CAD Reconstruction</h3>
-            <p class="step-desc">
-              Parametric surfaces and Revit BIM elements are engineered to LOD 200–500 specifications.
-            </p>
-          </div>
-
-          <div class="workflow-step-card bento-card">
-            <span class="step-number">05</span>
-            <h3 class="step-title">Metrology Audit</h3>
-            <p class="step-desc">
-              Deliverables are verified against 3D deviation colormaps and GD&amp;T quality tolerances.
-            </p>
-          </div>
-
+            </article>
+          `).join('')}
         </div>
 
       </div>

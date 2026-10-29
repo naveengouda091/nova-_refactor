@@ -1036,14 +1036,65 @@ button:active, .btn:active { transform: scale(0.975); }
   grid-template-columns: repeat(5, 1fr);
   gap: 16px;
 }
+@media (max-width: 1100px) and (min-width: 641px) {
+  .workflow-strip-grid {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
 .workflow-step-card {
   background: var(--bg-card);
   border: 1px solid var(--border-line);
-  border-radius: var(--radius-sm);
-  padding: 20px 16px;
+  border-radius: var(--radius-md);
+  padding: 12px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
   position: relative;
+  transition: transform var(--dur-state-in) var(--ease-spring), box-shadow var(--dur-state-in) var(--ease-spring), border-color var(--dur-state-in);
+}
+.workflow-step-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-focus);
+}
+.workflow-card-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #0C1017;
+  border: 1px solid var(--border-line);
+}
+.workflow-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 300ms var(--ease-spring);
+}
+.workflow-step-card:hover .workflow-card-img {
+  transform: scale(1.04);
+}
+.workflow-card-tag {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 0.70rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.05em;
+}
+.workflow-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 2px 4px 6px 4px;
 }
 .step-number {
   font-family: var(--font-mono);
@@ -1053,12 +1104,13 @@ button:active, .btn:active { transform: scale(0.975); }
   margin-bottom: 8px;
 }
 .step-title {
-  font-size: 0.975rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  margin-bottom: 6px;
+  color: var(--text-high);
+  line-height: 1.3;
 }
 .step-desc {
-  font-size: 0.825rem;
+  font-size: 0.80rem;
   color: var(--text-medium);
   line-height: 1.45;
 }
