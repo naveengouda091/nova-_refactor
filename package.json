@@ -1,0 +1,14 @@
+{
+  "name": "novascan-3d-refactor",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Refactored high-precision website for NovaScan 3D - Laser Scanning, Photogrammetry & BIM Metrology",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.4.10"
+  }
+}
