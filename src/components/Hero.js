@@ -58,7 +58,7 @@ export function Hero() {
             </div>
           </div>
 
-          <!-- Right: Precision Grayscale 3D Polygonal Trophy CAD Viewport -->
+          <!-- Right: Precision Solid Grayscale 3D Polygonal Trophy CAD Viewport -->
           <div class="hero-cad-col">
             <div class="cad-viewport-wrapper">
               
@@ -172,65 +172,57 @@ export function initHeroFlangeCanvas() {
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.12;
+  renderer.toneMappingExposure = 0.95; // Balanced exposure to prevent white wash-out
   mount.innerHTML = '';
   mount.appendChild(renderer.domElement);
 
-  // 2. High-Contrast Studio Reflection Environment Map (Subtle brushed reflections)
+  // 2. High-Precision Matte Studio Reflection Map (Subtle Dark Slate / Charcoal)
   const envCanvas = document.createElement('canvas');
   envCanvas.width = 512;
   envCanvas.height = 256;
   const eCtx = envCanvas.getContext('2d');
   
-  // Grayscale Studio background gradient
+  // Grayscale Studio background gradient (Dark Slate to Gunmetal)
   const bgGrad = eCtx.createLinearGradient(0, 0, 0, 256);
-  bgGrad.addColorStop(0, '#FFFFFF');
-  bgGrad.addColorStop(0.35, '#CBD5E1');
-  bgGrad.addColorStop(0.70, '#64748B');
+  bgGrad.addColorStop(0, '#94A3B8');
+  bgGrad.addColorStop(0.40, '#475569');
+  bgGrad.addColorStop(0.75, '#1E293B');
   bgGrad.addColorStop(1, '#0F172A');
   eCtx.fillStyle = bgGrad;
   eCtx.fillRect(0, 0, 512, 256);
 
-  // Overhead Key Softbox
-  const softbox1 = eCtx.createRadialGradient(180, 50, 5, 180, 50, 80);
-  softbox1.addColorStop(0, '#FFFFFF');
-  softbox1.addColorStop(0.6, 'rgba(255, 255, 255, 0.7)');
+  // Softbox: Subtle neutral reflection
+  const softbox1 = eCtx.createRadialGradient(200, 60, 5, 200, 60, 80);
+  softbox1.addColorStop(0, '#CBD5E1');
+  softbox1.addColorStop(0.6, 'rgba(148, 163, 184, 0.4)');
   softbox1.addColorStop(1, 'transparent');
   eCtx.fillStyle = softbox1;
-  eCtx.fillRect(90, 0, 180, 120);
-
-  // Side Rim Softbox
-  const softbox2 = eCtx.createRadialGradient(420, 80, 5, 420, 80, 70);
-  softbox2.addColorStop(0, '#FFFFFF');
-  softbox2.addColorStop(0.6, 'rgba(240, 243, 246, 0.6)');
-  softbox2.addColorStop(1, 'transparent');
-  eCtx.fillStyle = softbox2;
-  eCtx.fillRect(340, 10, 160, 150);
+  eCtx.fillRect(120, 0, 160, 120);
 
   const envTex = new THREE.CanvasTexture(envCanvas);
   envTex.mapping = THREE.EquirectangularReflectionMapping;
   scene.environment = envTex;
 
-  // 3. Studio Directional & Ambient Lighting (Monochrome CAD Precision High Contrast)
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+  // 3. Studio Directional & Ambient Lighting (Engineered for Solid CAD Gray)
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
   scene.add(ambientLight);
 
-  // Key light positioned at high 45° angle to create sharp, crisp polygon facet contrast
-  const keyLight = new THREE.DirectionalLight(0xffffff, 2.5);
-  keyLight.position.set(3.8, 4.5, 3.4);
+  // Strong Key light positioned at 45° angle to create rich geometric facet shading
+  const keyLight = new THREE.DirectionalLight(0xffffff, 1.9);
+  keyLight.position.set(3.6, 4.2, 3.2);
   keyLight.castShadow = true;
   keyLight.shadow.mapSize.width = 1024;
   keyLight.shadow.mapSize.height = 1024;
   scene.add(keyLight);
 
-  // Subtle cool fill from opposite side
-  const fillLight = new THREE.DirectionalLight(0xe2e8f0, 0.9);
-  fillLight.position.set(-3.5, 1.2, 2.2);
+  // Subtle cool fill from left
+  const fillLight = new THREE.DirectionalLight(0x94a3b8, 0.65);
+  fillLight.position.set(-3.5, 1.2, 2.0);
   scene.add(fillLight);
 
   // Sharp specular rim light from back-top
-  const rimLight = new THREE.DirectionalLight(0xffffff, 1.8);
-  rimLight.position.set(0, 3.2, -3.2);
+  const rimLight = new THREE.DirectionalLight(0xcbd5e1, 1.2);
+  rimLight.position.set(0, 3.0, -3.0);
   scene.add(rimLight);
 
   // Root Trophy Group (for orbit rotation)
@@ -253,17 +245,17 @@ export function initHeroFlangeCanvas() {
   trophyRoot.add(laserGroup);
 
   // =========================================================================
-  // 4. PRECISION HIGH-POLYGON SLENDER TROPHY GEOMETRY
-  // Authentic replica of the championship trophy:
-  // - Top Tennis Ball nestled in 5-pointed Star Cup
-  // - Slender, tall 5-pointed star shaft with chamfered ridges & sharp facets
-  // - Architectural circular pedestal with brushed aluminum nameplate plaque
+  // 4. PRECISION WATERTIGHT SOLID POLYGONAL TROPHY GEOMETRY
+  // 100% Solid & Closed — NO HOLES, NO INSIDES VISIBLE
+  // - Top Tennis Ball solidly mounted on capped star column
+  // - Slender 5-pointed star shaft with sharp chiseled facets & chamfers
+  // - Multi-tiered architectural pedestal base with engraved plaque
   // =========================================================================
 
   const NUM_STAR_POINTS = 5;
 
   // Chamfered 20-vertex Star Perimeter generator (creates 3-facet chiseled ridges)
-  function getChamferedStarLoop(y, rOut, rIn, tipLift = 0) {
+  function getChamferedStarLoop(y, rOut, rIn) {
     const pts = [];
     const chamferAng = 0.085;
     const rBevel = rOut * 0.95;
@@ -274,21 +266,21 @@ export function initHeroFlangeCanvas() {
       // 1. Left chamfer facet
       pts.push(new THREE.Vector3(
         Math.cos(aTip - chamferAng) * rBevel,
-        y + tipLift * 0.88,
+        y,
         Math.sin(aTip - chamferAng) * rBevel
       ));
 
       // 2. Center sharp crest ridge
       pts.push(new THREE.Vector3(
         Math.cos(aTip) * rOut,
-        y + tipLift,
+        y,
         Math.sin(aTip) * rOut
       ));
 
       // 3. Right chamfer facet
       pts.push(new THREE.Vector3(
         Math.cos(aTip + chamferAng) * rBevel,
-        y + tipLift * 0.88,
+        y,
         Math.sin(aTip + chamferAng) * rBevel
       ));
 
@@ -303,22 +295,22 @@ export function initHeroFlangeCanvas() {
     return pts; // 20 vertices per loop
   }
 
-  // 12-Tier profile engineered for authentic slender proportions
+  // 11-Tier profile engineered for authentic slender proportions
   const starLevels = [
-    { y: -0.65, rOut: 0.18, rIn: 0.11, tipLift: 0 }, // Stem root
-    { y: -0.52, rOut: 0.17, rIn: 0.11, tipLift: 0 }, // Slender waist
-    { y: -0.32, rOut: 0.19, rIn: 0.12, tipLift: 0 },
-    { y: -0.10, rOut: 0.22, rIn: 0.14, tipLift: 0 },
-    { y: 0.12,  rOut: 0.26, rIn: 0.17, tipLift: 0 },
-    { y: 0.35,  rOut: 0.31, rIn: 0.20, tipLift: 0 },
-    { y: 0.55,  rOut: 0.36, rIn: 0.23, tipLift: 0 },
-    { y: 0.72,  rOut: 0.42, rIn: 0.27, tipLift: 0.02 },
-    { y: 0.86,  rOut: 0.47, rIn: 0.30, tipLift: 0.05 },
-    { y: 0.94,  rOut: 0.50, rIn: 0.32, tipLift: 0.08 }, // Star Cup rim with tips rising to frame the ball
-    { y: 0.97,  rOut: 0.48, rIn: 0.30, tipLift: 0.08 }  // Beveled inner rim
+    { y: -0.65, rOut: 0.18, rIn: 0.11 }, // Stem root
+    { y: -0.52, rOut: 0.17, rIn: 0.11 }, // Slender waist
+    { y: -0.32, rOut: 0.19, rIn: 0.12 },
+    { y: -0.10, rOut: 0.22, rIn: 0.14 },
+    { y: 0.12,  rOut: 0.26, rIn: 0.17 },
+    { y: 0.35,  rOut: 0.31, rIn: 0.20 },
+    { y: 0.55,  rOut: 0.36, rIn: 0.23 },
+    { y: 0.72,  rOut: 0.42, rIn: 0.27 },
+    { y: 0.86,  rOut: 0.47, rIn: 0.30 },
+    { y: 0.94,  rOut: 0.50, rIn: 0.32 }, // Star cup outer rim
+    { y: 0.97,  rOut: 0.48, rIn: 0.30 }  // Beveled top perimeter
   ];
 
-  const ringsOfStar = starLevels.map(lvl => getChamferedStarLoop(lvl.y, lvl.rOut, lvl.rIn, lvl.tipLift));
+  const ringsOfStar = starLevels.map(lvl => getChamferedStarLoop(lvl.y, lvl.rOut, lvl.rIn));
 
   // Build the 20-faceted vertical polygonal column panels with crisp flat normals
   const starVerts = [];
@@ -359,18 +351,32 @@ export function initHeroFlangeCanvas() {
     }
   }
 
-  // Recessed Inner Star Socket (Nest for the ball)
+  // 1. TOP SOLID DECK CAP (100% Watertight Closed Surface - NO HOLES / NO CAVITIES)
   const topRim = ringsOfStar[ringsOfStar.length - 1];
-  const socketFloor = new THREE.Vector3(0, 0.82, 0);
-  const sBaseIdx = starVerts.length / 3;
+  const topCapCenter = new THREE.Vector3(0, 0.97, 0);
+  const tBaseIdx = starVerts.length / 3;
   for (let i = 0; i < PTS_COUNT; i++) {
     const nextI = (i + 1) % PTS_COUNT;
-    const v0 = socketFloor;
-    const v1 = topRim[i];
-    const v2 = topRim[nextI];
+    const v0 = topCapCenter;
+    const v1 = topRim[nextI];
+    const v2 = topRim[i];
     starVerts.push(v0.x, v0.y, v0.z, v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
     starNormals.push(0, 1, 0, 0, 1, 0, 0, 1, 0);
-    starIndices.push(sBaseIdx + i * 3, sBaseIdx + i * 3 + 1, sBaseIdx + i * 3 + 2);
+    starIndices.push(tBaseIdx + i * 3, tBaseIdx + i * 3 + 1, tBaseIdx + i * 3 + 2);
+  }
+
+  // 2. BOTTOM SOLID ROOT CAP (100% Closed at bottom)
+  const bottomRim = ringsOfStar[0];
+  const bottomCapCenter = new THREE.Vector3(0, -0.65, 0);
+  const bBaseIdx = starVerts.length / 3;
+  for (let i = 0; i < PTS_COUNT; i++) {
+    const nextI = (i + 1) % PTS_COUNT;
+    const v0 = bottomCapCenter;
+    const v1 = bottomRim[i];
+    const v2 = bottomRim[nextI];
+    starVerts.push(v0.x, v0.y, v0.z, v1.x, v1.y, v1.z, v2.x, v2.y, v2.z);
+    starNormals.push(0, -1, 0, 0, -1, 0, 0, -1, 0);
+    starIndices.push(bBaseIdx + i * 3, bBaseIdx + i * 3 + 1, bBaseIdx + i * 3 + 2);
   }
 
   const starGeom = new THREE.BufferGeometry();
@@ -378,9 +384,13 @@ export function initHeroFlangeCanvas() {
   starGeom.setAttribute('normal', new THREE.Float32BufferAttribute(starNormals, 3));
   starGeom.setIndex(starIndices);
 
-  // B. Top Tennis Ball (Prominently seated in star cup)
+  // B. Solid Ball Mount Pedestal (Closed Solid Cylinder seated on star deck)
+  const ballMountGeom = new THREE.CylinderGeometry(0.12, 0.16, 0.06, 32);
+  ballMountGeom.translate(0, 1.0, 0);
+
+  // C. Top Tennis Ball (Opaque Solid Geodesic Sphere resting solidly on mount)
   const BALL_RADIUS = 0.22;
-  const BALL_CENTER_Y = 1.04;
+  const BALL_CENTER_Y = 1.18;
   const ballGeom = new THREE.SphereGeometry(BALL_RADIUS, 42, 32);
   ballGeom.translate(0, BALL_CENTER_Y, 0);
 
@@ -395,13 +405,8 @@ export function initHeroFlangeCanvas() {
   const seamCurve = new THREE.CatmullRomCurve3(seamCurvePts, true);
   const seamTubeGeom = new THREE.TubeGeometry(seamCurve, 80, 0.009, 8, true);
 
-  // Ball Seat Collar Ring inside star socket
-  const ballSeatGeom = new THREE.TorusGeometry(0.12, 0.014, 16, 36);
-  ballSeatGeom.rotateX(Math.PI / 2);
-  ballSeatGeom.translate(0, 0.85, 0);
-
-  // C. Multi-Tiered Polygonal Architectural Pedestal
-  // 1. Polished Chrome Collar Ring between stem and pedestal
+  // D. Multi-Tiered Polygonal Architectural Pedestal Base
+  // 1. Collar Ring between stem and pedestal
   const collarRingGeom = new THREE.TorusGeometry(0.20, 0.018, 16, 48);
   collarRingGeom.rotateX(Math.PI / 2);
   collarRingGeom.translate(0, -0.65, 0);
@@ -410,7 +415,7 @@ export function initHeroFlangeCanvas() {
   const upperPlinthGeom = new THREE.CylinderGeometry(0.32, 0.36, 0.06, 48);
   upperPlinthGeom.translate(0, -0.70, 0);
 
-  // 3. Main Tapered Pedestal Body (Dark Graphite Slate)
+  // 3. Main Tapered Pedestal Body (Solid Graphite Gray)
   const baseGeom = new THREE.CylinderGeometry(0.36, 0.54, 0.38, 48);
   baseGeom.translate(0, -0.91, 0);
 
@@ -441,14 +446,14 @@ export function initHeroFlangeCanvas() {
   plaqueCanvas.width = 512;
   plaqueCanvas.height = 256;
   const pCtx = plaqueCanvas.getContext('2d');
-  // Brushed aluminum plate background
-  pCtx.fillStyle = '#E2E8F0';
+  // Brushed gray plate background
+  pCtx.fillStyle = '#64748B';
   pCtx.fillRect(0, 0, 512, 256);
   // Inner border bevel
-  pCtx.strokeStyle = '#94A3B8';
+  pCtx.strokeStyle = '#475569';
   pCtx.lineWidth = 6;
   pCtx.strokeRect(16, 16, 480, 224);
-  pCtx.strokeStyle = '#CBD5E1';
+  pCtx.strokeStyle = '#94A3B8';
   pCtx.lineWidth = 2;
   pCtx.strokeRect(22, 22, 468, 212);
   // Laser engraved text
@@ -457,10 +462,10 @@ export function initHeroFlangeCanvas() {
   pCtx.textAlign = 'center';
   pCtx.fillText('NOVASCAN 3D', 256, 92);
   pCtx.font = '600 22px Sora, monospace';
-  pCtx.fillStyle = '#334155';
+  pCtx.fillStyle = '#1E293B';
   pCtx.fillText('CAL_ID: REV-8840-X', 256, 142);
   pCtx.font = '500 18px Sora, monospace';
-  pCtx.fillStyle = '#64748B';
+  pCtx.fillStyle = '#334155';
   pCtx.fillText('ISO 10360-8 • TOL: 0.020mm', 256, 184);
 
   const plaqueTex = new THREE.CanvasTexture(plaqueCanvas);
@@ -474,7 +479,7 @@ export function initHeroFlangeCanvas() {
   shadowCanvas.height = 128;
   const sCtx = shadowCanvas.getContext('2d');
   const sGrad = sCtx.createRadialGradient(64, 64, 16, 64, 64, 62);
-  sGrad.addColorStop(0, 'rgba(0, 0, 0, 0.50)');
+  sGrad.addColorStop(0, 'rgba(0, 0, 0, 0.55)');
   sGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
   sCtx.fillStyle = sGrad;
   sCtx.fillRect(0, 0, 128, 128);
@@ -484,79 +489,82 @@ export function initHeroFlangeCanvas() {
   scene.add(shadowMesh);
 
   // =========================================================================
-  // 5. HIGH-CONTRAST GRAYSCALE MONOCHROME PBR MATERIALS
-  // Surgical Brushed Titanium, Bead-Blasted Aluminum, Mirror Chrome, Graphite Slate
+  // 5. TRUE INDUSTRIAL GRAY MONOCHROME PBR MATERIALS (NOT WHITE)
+  // Matte Slate Gray, Gunmetal Titanium, Dark Charcoal Graphite
   // =========================================================================
 
-  // Chiseled Star Shaft: Bright Brushed Titanium/Silver with Flat Shading
-  const titaniumPBR = new THREE.MeshStandardMaterial({
-    color: 0xDEE2E6, // Crisp surgical silver/titanium
-    metalness: 0.70,
-    roughness: 0.22,
-    envMapIntensity: 1.6,
+  // Chiseled Star Shaft: Matte Solid Slate Gray with Flat Shading (True Gray)
+  const shaftPBR = new THREE.MeshStandardMaterial({
+    color: 0x556070, // Solid medium slate gray (~40% tone, NOT white)
+    metalness: 0.28,
+    roughness: 0.42,
     flatShading: true
   });
 
-  // Top Ball: Precision Satin Aluminum / Machined Platinum
+  // Top Ball: Solid Cool Industrial Gray
   const ballPBR = new THREE.MeshStandardMaterial({
-    color: 0xEEF2F6,
-    metalness: 0.85,
-    roughness: 0.16,
-    envMapIntensity: 2.0
+    color: 0x6E7B8C, // Medium-light solid gray (~50% tone)
+    metalness: 0.35,
+    roughness: 0.35
   });
 
-  // Tennis Ball Seam Inlay: Dark Charcoal Slate
+  // Solid Ball Pedestal Mount
+  const mountPBR = new THREE.MeshStandardMaterial({
+    color: 0x475569,
+    metalness: 0.30,
+    roughness: 0.40
+  });
+
+  // Tennis Ball Seam Inlay: Deep Charcoal Slate
   const seamPBR = new THREE.MeshStandardMaterial({
-    color: 0x1E293B,
+    color: 0x1E242B,
     metalness: 0.20,
     roughness: 0.60
   });
 
-  // High-Polish Specular Chrome Collars & Rings
-  const chromePBR = new THREE.MeshStandardMaterial({
-    color: 0xF8FAFC,
-    metalness: 0.96,
-    roughness: 0.08,
-    envMapIntensity: 2.2
+  // Accent Collar Ring: Anodized Titanium Gray
+  const collarPBR = new THREE.MeshStandardMaterial({
+    color: 0x788696,
+    metalness: 0.55,
+    roughness: 0.28
   });
 
-  // Deep Matte Graphite Slate Pedestal
+  // Deep Matte Graphite Slate Pedestal Body
   const graphitePBR = new THREE.MeshStandardMaterial({
-    color: 0x1E242E,
+    color: 0x1E232A, // Deep charcoal graphite
     metalness: 0.15,
-    roughness: 0.50,
-    envMapIntensity: 0.90
+    roughness: 0.52
   });
 
-  // Milled Charcoal Anodized Aluminum (Plinth, Relief Groove & Feet)
+  // Milled Charcoal Cast Steel (Plinth, Relief Groove & Leveling Feet)
   const charcoalPBR = new THREE.MeshStandardMaterial({
-    color: 0x141820,
-    metalness: 0.32,
-    roughness: 0.44,
-    envMapIntensity: 1.05
+    color: 0x13171D,
+    metalness: 0.30,
+    roughness: 0.46
   });
 
-  // Brushed Platinum Plaque Plate
+  // Anodized Gray Plaque Plate
   const plaquePBR = new THREE.MeshStandardMaterial({
-    color: 0xF1F5F9,
+    color: 0x64748B,
     map: plaqueTex,
-    metalness: 0.88,
-    roughness: 0.18,
-    envMapIntensity: 1.8
+    metalness: 0.50,
+    roughness: 0.32
   });
 
-  // 1. ASSEMBLE SOLID GROUP
-  const starMesh = new THREE.Mesh(starGeom, titaniumPBR);
+  // 1. ASSEMBLE SOLID GROUP (100% Watertight Opaque Solids)
+  const starMesh = new THREE.Mesh(starGeom, shaftPBR);
   starMesh.castShadow = true;
   starMesh.receiveShadow = true;
+
+  const ballMountMesh = new THREE.Mesh(ballMountGeom, mountPBR);
+  ballMountMesh.castShadow = true;
 
   const ballMesh = new THREE.Mesh(ballGeom, ballPBR);
   ballMesh.castShadow = true;
 
   const seamMesh = new THREE.Mesh(seamTubeGeom, seamPBR);
-  const ballSeatMesh = new THREE.Mesh(ballSeatGeom, chromePBR);
 
-  const collarRingMesh = new THREE.Mesh(collarRingGeom, chromePBR);
+  const collarRingMesh = new THREE.Mesh(collarRingGeom, collarPBR);
   const upperPlinthMesh = new THREE.Mesh(upperPlinthGeom, graphitePBR);
   upperPlinthMesh.receiveShadow = true;
 
@@ -570,9 +578,9 @@ export function initHeroFlangeCanvas() {
   const plaqueMesh = new THREE.Mesh(plaqueGeom, plaquePBR);
 
   solidGroup.add(starMesh);
+  solidGroup.add(ballMountMesh);
   solidGroup.add(ballMesh);
   solidGroup.add(seamMesh);
-  solidGroup.add(ballSeatMesh);
   solidGroup.add(collarRingMesh);
   solidGroup.add(upperPlinthMesh);
   solidGroup.add(baseMesh);
@@ -586,14 +594,14 @@ export function initHeroFlangeCanvas() {
     solidGroup.add(footMesh);
   });
 
-  // 2. ASSEMBLE WIREFRAME GROUP (Crisp Dark Charcoal Wireframe over Matte White Clay)
+  // 2. ASSEMBLE WIREFRAME GROUP (Crisp Dark Charcoal Wireframe over Solid Gray Body)
   const wireMat = new THREE.MeshBasicMaterial({ color: 0x0F172A, wireframe: true });
-  const clayMat = new THREE.MeshStandardMaterial({ color: 0xF8FAFC, roughness: 0.9, metalness: 0.05, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
+  const solidGrayMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.7, metalness: 0.1, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
   
-  [starGeom, ballGeom, baseGeom, plinthGeom, plaqueGeom].forEach(g => {
-    const clay = new THREE.Mesh(g, clayMat);
+  [starGeom, ballGeom, ballMountGeom, baseGeom, plinthGeom, plaqueGeom].forEach(g => {
+    const body = new THREE.Mesh(g, solidGrayMat);
     const wire = new THREE.Mesh(g, wireMat);
-    wireGroup.add(clay);
+    wireGroup.add(body);
     wireGroup.add(wire);
   });
 
@@ -610,8 +618,8 @@ export function initHeroFlangeCanvas() {
       samplePoints.push(x, y, z);
 
       // Grayscale Elevation / Deviation Tonal Gradient
-      const normY = Math.max(0, Math.min(1, (y + 1.25) / 2.5));
-      const val = 0.25 + normY * 0.75;
+      const normY = Math.max(0, Math.min(1, (y + 1.25) / 2.6));
+      const val = 0.20 + normY * 0.65; // True gray range [0.20, 0.85]
       grayscaleDevColors.push(val, val, val);
     }
   }
@@ -624,8 +632,8 @@ export function initHeroFlangeCanvas() {
   const ptsGeom = new THREE.BufferGeometry();
   ptsGeom.setAttribute('position', new THREE.Float32BufferAttribute(samplePoints, 3));
 
-  // Monochrome Silver/White Laser Coordinate Dots
-  const dotsMat = new THREE.PointsMaterial({ color: 0xE2E8F0, size: 0.038, sizeAttenuation: true });
+  // Industrial Slate-Gray Coordinate Dots
+  const dotsMat = new THREE.PointsMaterial({ color: 0x94A3B8, size: 0.038, sizeAttenuation: true });
   dotsGroup.add(new THREE.Points(ptsGeom, dotsMat));
 
   // Grayscale Deviation Heatmap Dots
@@ -643,7 +651,7 @@ export function initHeroFlangeCanvas() {
   outlineGroup.add(plinthEdges);
   outlineGroup.add(seamMesh.clone());
 
-  // 5. ASSEMBLE LASER SCAN GROUP (Laser plane sweep over grayscale solid)
+  // 5. ASSEMBLE LASER SCAN GROUP (Laser plane sweep over solid gray body)
   const laserPlaneGeom = new THREE.PlaneGeometry(2.2, 0.024);
   const laserPlaneMat = new THREE.MeshBasicMaterial({ color: 0x00d2ff, transparent: true, opacity: 0.92, side: THREE.DoubleSide });
   const laserMesh = new THREE.Mesh(laserPlaneGeom, laserPlaneMat);
