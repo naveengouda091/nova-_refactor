@@ -60,7 +60,7 @@ export function Hero() {
             </div>
           </div>
 
-          <!-- Right: Precision Solid Grayscale 3D CAD Viewport -->
+          <!-- Right: Precision 3D CAD Viewport -->
           <div class="hero-cad-col">
             <div class="cad-viewport-wrapper">
               
@@ -70,8 +70,8 @@ export function Hero() {
                 <!-- Top Viewport Header Bar -->
                 <div class="viewport-header-bar mono text-xs">
                   <div class="header-left">
-                    <span class="text-laser font-bold" id="stage-badge-step">STAGE 01 //</span>
-                    <span class="text-high font-bold" id="stage-badge-name">POLYGONAL SOLID</span>
+                    <span class="text-laser font-bold">ASSET //</span>
+                    <span class="text-high font-bold">CHAIR_03.OBJ</span>
                   </div>
                   <div class="header-right">
                     <span class="status-dot dot-green" aria-hidden="true"></span>
@@ -82,38 +82,7 @@ export function Hero() {
                 <!-- Three.js 3D Viewport Container -->
                 <div class="pillar-canvas-container" id="trophy-viewport-parent">
                   <div id="trophy-three-mount" class="w-full h-full"></div>
-                  
-                  <!-- Deviation Colormap Scale Bar (Grayscale Metrology) -->
-                  <div class="flange-scale-bar-overlay" id="flange-scale-overlay" style="display: none;" aria-hidden="true">
-                    <div class="scale-labels mono text-xs">
-                      <span>-0.15mm</span>
-                      <span class="text-pass">0.00mm</span>
-                      <span>+0.15mm</span>
-                    </div>
-                    <div class="spectrum-bar grayscale-spectrum"></div>
-                  </div>
-
                   <div class="canvas-drag-hint mono" aria-hidden="true">&bull; DRAG TO ORBIT 3D MODEL &bull;</div>
-                </div>
-
-                <!-- Bottom Footer Bar: Multi-Form State Switcher -->
-                <div class="viewport-footer-bar mono text-xs">
-                  <!-- Form Mode Selector Pills -->
-                  <div class="footer-segmented-pills" role="tablist" aria-label="Model Representation Forms">
-                    <button class="layer-pill-btn active" data-mode="solid" role="tab" aria-selected="true">Solid</button>
-                    <button class="layer-pill-btn" data-mode="laser" role="tab" aria-selected="false">Laser</button>
-                    <button class="layer-pill-btn" data-mode="dots" role="tab" aria-selected="false">Dots</button>
-                    <button class="layer-pill-btn" data-mode="coloured" role="tab" aria-selected="false">Heatmap</button>
-                    <button class="layer-pill-btn" data-mode="wireframe" role="tab" aria-selected="false">Wiremesh</button>
-                    <button class="layer-pill-btn" data-mode="outline" role="tab" aria-selected="false">CAD</button>
-                  </div>
-
-                  <!-- Auto-Cycle Toggle -->
-                  <button id="flange-play-toggle" class="flange-play-btn" title="Toggle Auto Cycle" aria-label="Auto Cycle Forms">
-                    <svg id="flange-play-icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                  </button>
                 </div>
 
               </div>
@@ -131,23 +100,12 @@ export function initHeroFlangeCanvas() {
   const mount = document.getElementById('trophy-three-mount');
   if (!mount) return;
 
-  const stageStepLabel = document.getElementById('stage-badge-step');
-  const stageNameLabel = document.getElementById('stage-badge-name');
-  const scaleOverlay = document.getElementById('flange-scale-overlay');
-  const playBtn = document.getElementById('flange-play-toggle');
-  const playIcon = document.getElementById('flange-play-icon');
-  const modeBtns = document.querySelectorAll('.layer-pill-btn');
-
   const RM = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  let currentMode = 'solid';
-  let autoCycle = false;
-  let cycleTimer = null;
 
   // 1. Scene, Camera, Renderer Setup
   const scene = new THREE.Scene();
   const width = mount.clientWidth || 480;
-  const height = mount.clientHeight || 400;
+  const height = mount.clientHeight || 420;
 
   const camera = new THREE.PerspectiveCamera(32, width / height, 0.1, 100);
   camera.position.set(0, 0.45, 4.2);
@@ -163,7 +121,7 @@ export function initHeroFlangeCanvas() {
   mount.innerHTML = '';
   mount.appendChild(renderer.domElement);
 
-  // 2. High-Precision Matte Studio Reflection Map
+  // 2. High-Precision Studio Reflection Map
   const envCanvas = document.createElement('canvas');
   envCanvas.width = 512;
   envCanvas.height = 256;
@@ -188,7 +146,7 @@ export function initHeroFlangeCanvas() {
   envTex.mapping = THREE.EquirectangularReflectionMapping;
   scene.environment = envTex;
 
-  // 3. Studio Directional & Ambient Lighting (Engineered for Solid CAD Gray)
+  // 3. Studio Directional & Ambient Lighting (Engineered for Precision CAD Gray)
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.70);
   scene.add(ambientLight);
 
@@ -238,32 +196,11 @@ export function initHeroFlangeCanvas() {
   modelRoot.rotation.y = -0.55;
   modelRoot.rotation.x = 0.04;
 
-  // Form Representation Groups
-  const solidGroup = new THREE.Group();
-  const wireGroup = new THREE.Group();
-  const dotsGroup = new THREE.Group();
-  const heatmapGroup = new THREE.Group();
-  const outlineGroup = new THREE.Group();
-  const laserGroup = new THREE.Group();
-
-  modelRoot.add(solidGroup);
-  modelRoot.add(wireGroup);
-  modelRoot.add(dotsGroup);
-  modelRoot.add(heatmapGroup);
-  modelRoot.add(outlineGroup);
-  modelRoot.add(laserGroup);
-
-  // Laser Scan Plane
-  const laserPlaneGeom = new THREE.PlaneGeometry(2.6, 0.024);
-  const laserPlaneMat = new THREE.MeshBasicMaterial({ color: 0x00d2ff, transparent: true, opacity: 0.92, side: THREE.DoubleSide });
-  const laserMesh = new THREE.Mesh(laserPlaneGeom, laserPlaneMat);
-  laserGroup.add(laserMesh);
-
   // =========================================================================
-  // 4. LOAD & CONVERT USER'S 3D CHAIR MODEL (OBJ)
+  // 4. LOAD & RENDER 3D MODEL
   // =========================================================================
 
-  // True Solid Industrial Slate-Gray Materials (Zero White Wash-Out)
+  // Industrial Slate-Gray Materials (Zero White Wash-Out, Crisp Facet Definition)
   const shellMat = new THREE.MeshStandardMaterial({
     color: 0x556070, // Medium slate gray (solid, opaque)
     metalness: 0.28,
@@ -285,10 +222,6 @@ export function initHeroFlangeCanvas() {
     side: THREE.DoubleSide
   });
 
-  const wireMat = new THREE.MeshBasicMaterial({ color: 0x0F172A, wireframe: true });
-  const wireBaseMat = new THREE.MeshStandardMaterial({ color: 0x475569, roughness: 0.7, metalness: 0.1, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
-  const edgeLineMat = new THREE.LineBasicMaterial({ color: 0x0F172A, linewidth: 2 });
-
   const loader = new OBJLoader();
 
   function processLoadedObject(rawObj) {
@@ -307,16 +240,12 @@ export function initHeroFlangeCanvas() {
     // Container centered at origin
     const centeredHolder = new THREE.Group();
     centeredHolder.scale.setScalar(scaleFactor);
-    // Center X & Z, place feet at y = -1.12
     centeredHolder.position.x = -center.x * scaleFactor;
     centeredHolder.position.y = -center.y * scaleFactor;
     centeredHolder.position.z = -center.z * scaleFactor;
     centeredHolder.add(rawObj);
 
-    // 3. Assemble Representation Modes
-    const sampledPoints = [];
-    const heatmapColors = [];
-
+    // 3. Apply Materials
     rawObj.traverse((child) => {
       if (!child.isMesh) return;
 
@@ -326,7 +255,6 @@ export function initHeroFlangeCanvas() {
       const isLegs = child.name && (child.name.startsWith('Line002') || child.name.startsWith('Line003') || child.name.startsWith('Line004') || child.name.startsWith('Line005'));
       const isFeet = child.name && (child.name.startsWith('Line006') || child.name.startsWith('Line007') || child.name.startsWith('Line008') || child.name.startsWith('Line009'));
 
-      // Solid Material
       if (isFeet) {
         child.material = feetMat;
       } else if (isLegs) {
@@ -334,74 +262,9 @@ export function initHeroFlangeCanvas() {
       } else {
         child.material = shellMat;
       }
-
-      // Sample Points for Point Cloud & Heatmap
-      const pos = child.geometry.attributes.position;
-      const step = 8; // Optimal density (~8,000 pts)
-      for (let i = 0; i < pos.count; i += step) {
-        const v = new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i));
-        v.applyMatrix4(child.matrixWorld);
-        // Normalized elevation for grayscale deviation colormap
-        const normY = Math.max(0, Math.min(1, (v.y - bbox.min.y) / size.y));
-        const val = 0.20 + normY * 0.65;
-
-        // Apply scaling & centering to points
-        const px = (v.x - center.x) * scaleFactor;
-        const py = (v.y - center.y) * scaleFactor;
-        const pz = (v.z - center.z) * scaleFactor;
-
-        sampledPoints.push(px, py, pz);
-        heatmapColors.push(val, val, val);
-      }
     });
 
-    // A. SOLID GROUP
-    solidGroup.add(centeredHolder);
-
-    // B. LASER SCAN GROUP
-    laserGroup.add(centeredHolder.clone());
-
-    // C. WIREFRAME GROUP
-    const wireClone = centeredHolder.clone();
-    wireClone.traverse((child) => {
-      if (child.isMesh) {
-        child.material = wireBaseMat;
-        const wMesh = new THREE.Mesh(child.geometry, wireMat);
-        child.add(wMesh);
-      }
-    });
-    wireGroup.add(wireClone);
-
-    // D. CAD OUTLINE GROUP
-    const outlineHolder = new THREE.Group();
-    outlineHolder.scale.setScalar(scaleFactor);
-    outlineHolder.position.copy(centeredHolder.position);
-    rawObj.traverse((child) => {
-      if (child.isMesh) {
-        const edges = new THREE.EdgesGeometry(child.geometry, 24);
-        const line = new THREE.LineSegments(edges, edgeLineMat);
-        line.position.copy(child.position);
-        line.rotation.copy(child.rotation);
-        line.scale.copy(child.scale);
-        outlineHolder.add(line);
-      }
-    });
-    outlineGroup.add(outlineHolder);
-
-    // E. POINT CLOUD & HEATMAP
-    const ptsGeom = new THREE.BufferGeometry();
-    ptsGeom.setAttribute('position', new THREE.Float32BufferAttribute(sampledPoints, 3));
-
-    const dotsMat = new THREE.PointsMaterial({ color: 0x94A3B8, size: 0.038, sizeAttenuation: true });
-    dotsGroup.add(new THREE.Points(ptsGeom, dotsMat));
-
-    const heatmapGeom = ptsGeom.clone();
-    heatmapGeom.setAttribute('color', new THREE.Float32BufferAttribute(heatmapColors, 3));
-    const heatmapMat = new THREE.PointsMaterial({ vertexColors: true, size: 0.040, sizeAttenuation: true });
-    heatmapGroup.add(new THREE.Points(heatmapGeom, heatmapMat));
-
-    // Refresh current active mode visibility
-    setMode(currentMode);
+    modelRoot.add(centeredHolder);
   }
 
   // Load OBJ with fallback to public path
@@ -412,7 +275,6 @@ export function initHeroFlangeCanvas() {
     },
     undefined,
     () => {
-      // Fallback
       loader.load('/models/chair.obj', (fallbackObj) => {
         processLoadedObject(fallbackObj);
       });
@@ -420,78 +282,8 @@ export function initHeroFlangeCanvas() {
   );
 
   // =========================================================================
-  // 5. FORM REPRESENTATION SWITCHER & CONTROLS
+  // 5. INTERACTION & ANIMATION LOOP
   // =========================================================================
-  const stages = [
-    { mode: 'solid', step: 'STAGE 01 //', name: 'POLYGONAL SOLID' },
-    { mode: 'laser', step: 'STAGE 02 //', name: 'LASER SCANNING' },
-    { mode: 'dots', step: 'STAGE 03 //', name: 'POINT CLOUD' },
-    { mode: 'coloured', step: 'STAGE 04 //', name: 'DEVIATION HEATMAP' },
-    { mode: 'wireframe', step: 'STAGE 05 //', name: 'CAD WIREMESH' },
-    { mode: 'outline', step: 'STAGE 06 //', name: 'PARAMETRIC CAD' }
-  ];
-
-  function setMode(modeKey) {
-    currentMode = modeKey;
-    const stageInfo = stages.find(s => s.mode === modeKey) || stages[0];
-
-    if (stageStepLabel) stageStepLabel.textContent = stageInfo.step;
-    if (stageNameLabel) stageNameLabel.textContent = stageInfo.name;
-
-    solidGroup.visible = (modeKey === 'solid');
-    laserGroup.visible = (modeKey === 'laser');
-    dotsGroup.visible = (modeKey === 'dots');
-    heatmapGroup.visible = (modeKey === 'coloured');
-    wireGroup.visible = (modeKey === 'wireframe');
-    outlineGroup.visible = (modeKey === 'outline');
-
-    if (scaleOverlay) {
-      scaleOverlay.style.display = (modeKey === 'coloured') ? 'block' : 'none';
-    }
-
-    modeBtns.forEach(btn => {
-      const isActive = btn.dataset.mode === modeKey;
-      btn.classList.toggle('active', isActive);
-      btn.setAttribute('aria-selected', String(isActive));
-    });
-  }
-
-  modeBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      autoCycle = false;
-      updatePlayBtnUI();
-      setMode(btn.dataset.mode);
-    });
-  });
-
-  function startAutoCycle() {
-    if (cycleTimer) clearInterval(cycleTimer);
-    cycleTimer = setInterval(() => {
-      if (autoCycle) {
-        const curIdx = stages.findIndex(s => s.mode === currentMode);
-        const nextIdx = (curIdx + 1) % stages.length;
-        setMode(stages[nextIdx].mode);
-      }
-    }, 3200);
-  }
-
-  function updatePlayBtnUI() {
-    if (playIcon) {
-      playIcon.innerHTML = autoCycle
-        ? '<rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect>'
-        : '<polygon points="5 3 19 12 5 21 5 3"></polygon>';
-    }
-  }
-
-  if (playBtn) {
-    playBtn.addEventListener('click', () => {
-      autoCycle = !autoCycle;
-      updatePlayBtnUI();
-      if (autoCycle) startAutoCycle();
-    });
-  }
-
-  // Pointer drag orbit controls
   let isDragging = false;
   let previousMousePosition = { x: 0, y: 0 };
 
@@ -518,7 +310,7 @@ export function initHeroFlangeCanvas() {
   // Responsive Resize
   function handleResize() {
     const w = mount.clientWidth || 480;
-    const h = mount.clientHeight || 400;
+    const h = mount.clientHeight || 420;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
@@ -526,9 +318,6 @@ export function initHeroFlangeCanvas() {
   window.addEventListener('resize', handleResize);
 
   // Animation Loop
-  let laserY = -1.0;
-  let laserDir = 1;
-
   function animate() {
     requestAnimationFrame(animate);
 
@@ -536,16 +325,8 @@ export function initHeroFlangeCanvas() {
       modelRoot.rotation.y += 0.004;
     }
 
-    if (laserGroup.visible) {
-      laserY += 0.015 * laserDir;
-      if (laserY > 1.25) { laserY = 1.25; laserDir = -1; }
-      if (laserY < -1.15) { laserY = -1.15; laserDir = 1; }
-      laserMesh.position.y = laserY;
-    }
-
     renderer.render(scene, camera);
   }
 
-  setMode('solid');
   animate();
 }
