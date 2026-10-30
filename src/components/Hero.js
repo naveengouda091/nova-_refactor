@@ -64,22 +64,6 @@ export function Hero() {
           <div class="hero-cad-col">
             <div class="cad-viewport-wrapper">
               
-              <!-- Floating Glassmorphic Telemetry Badges -->
-              <div class="floating-badge badge-mandapa-tl glass-badge" aria-label="Optical Metrology Tolerance">
-                <span class="status-dot dot-green" aria-hidden="true"></span>
-                <span class="mono text-xs font-bold">Optical Metrology &bull; &plusmn;0.02mm Tol</span>
-              </div>
-
-              <div class="floating-badge badge-mandapa-mr glass-badge" aria-label="Point density metric">
-                <span class="status-dot dot-cyan" aria-hidden="true"></span>
-                <span class="mono text-xs font-bold">2.4M Pts / Sec</span>
-              </div>
-
-              <div class="floating-badge badge-mandapa-bl glass-badge" aria-label="CAD status metric">
-                <span class="status-dot dot-orange" aria-hidden="true"></span>
-                <span class="mono text-xs font-bold">STEP AP242 Solid</span>
-              </div>
-
               <!-- Main CAD Viewport Card Container -->
               <div class="cad-viewport-card bento-card">
                 

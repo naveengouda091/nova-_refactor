@@ -592,41 +592,13 @@ button:active, .btn:active { transform: scale(0.975); }
 
 /* Right: Precision 3D CAD Viewport Wrapper */
 .hero-collage-wrap,
-.pillar-viewport-wrap {
+.pillar-viewport-wrap,
+.cad-viewport-wrapper {
   position: relative;
   width: 100%;
   max-width: 520px;
   margin: 0 auto;
-  padding: 34px 16px 28px;
   overflow: visible;
-}
-
-/* Floating Badges with Unclipped Safe Coordinates */
-.badge-mandapa-tl {
-  position: absolute;
-  top: -12px;
-  right: 28px;
-  z-index: 25;
-  animation: float-gentle 4s ease-in-out infinite alternate;
-}
-.badge-mandapa-mr {
-  position: absolute;
-  top: 42%;
-  right: -14px;
-  z-index: 25;
-  animation: float-gentle 5s ease-in-out infinite 0.5s alternate;
-}
-.badge-mandapa-bl {
-  position: absolute;
-  bottom: -12px;
-  left: 24px;
-  z-index: 25;
-  animation: float-gentle 4.5s ease-in-out infinite 1s alternate;
-}
-
-@keyframes float-gentle {
-  0% { transform: translateY(0); }
-  100% { transform: translateY(-5px); }
 }
 
 /* Precision 3D CAD Viewport Card (Mandapa Heritage Pillar) */
@@ -1575,9 +1547,6 @@ button:active, .btn:active { transform: scale(0.975); }
   .footer-top-grid { grid-template-columns: 1fr; }
   .canvas-card { height: 440px; }
   .pillar-canvas-container { height: 320px; }
-  .badge-mandapa-tl { left: 4px; top: -6px; }
-  .badge-mandapa-mr { right: 4px; }
-  .badge-mandapa-bl { display: none; }
   .viewport-footer-bar { flex-direction: column; align-items: stretch; gap: 8px; }
   .footer-segmented-pills { justify-content: center; }
   .slider-container { height: 400px; }
